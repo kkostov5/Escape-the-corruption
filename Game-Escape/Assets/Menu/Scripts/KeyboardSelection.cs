@@ -25,6 +25,6 @@ public class KeyboardSelection : MonoBehaviour {
 
 	private void onDisable()
 	{
-		buttonSelected = false;
+		buttonSelected = false; 
 	}
 }
