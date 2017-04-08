@@ -8,30 +8,34 @@ public class PlatformerGenerator : MonoBehaviour {
 	public Transform generationPoint;
 	public float distanceBetween;
 
-	private float platformWidth;
 
 	public float distanceBetweenMin;
 	public float distanceBetweenMax;
 
+	private float minHeight;
+	public Transform maxHeightPoint;
+	private float maxHeight;
+	public float maxHeightChange;
+	private float heightChange;
+
 	private float oldWidth;
 	public ObjectPooler[] pools;
 
-	//public GameObject[] platforms;
 	private int selectedPlatform;
 	private float[] platformWidths;
-
 
 	// Use this for initialization
 	void Start () {
 
-		oldWidth = 4.5f;
-		platformWidth = platform.GetComponent<BoxCollider2D> ().size.x;	
+		oldWidth = (platform.GetComponent<BoxCollider2D> ().size.x)/2;
 
 		platformWidths = new float[pools.Length];
 		for (int i = 0; i < pools.Length; i++) 
 		{
 			platformWidths[i] = pools[i].platform.GetComponent<BoxCollider2D> ().size.x;	
 		}
+		minHeight = transform.position.y;
+		maxHeight = maxHeightPoint.position.y;
 	}
 	
 	// Update is called once per frame
@@ -40,15 +44,14 @@ public class PlatformerGenerator : MonoBehaviour {
 		{
 			distanceBetween = Random.Range (distanceBetweenMin,distanceBetweenMax);
 
-
-
 			selectedPlatform = Random.Range (0,pools.Length);
 
-			platformWidth = platformWidths [selectedPlatform];
+			heightChange = transform.position.y + Random.Range(maxHeightChange,-maxHeightChange);
 
-			transform.position = new Vector3 (transform.position.x + (platformWidths[selectedPlatform]/2) + oldWidth + distanceBetween, transform.position.y, transform.position.z);
+			heightChange = Mathf.Clamp(heightChange, minHeight, maxHeight);
 
-			//Instantiate (pools[selectedPlatform],transform.position,transform.rotation);
+			transform.position = new Vector3 (transform.position.x + (platformWidths[selectedPlatform]/2) + oldWidth + distanceBetween, heightChange, transform.position.z);
+
 
 			GameObject newPlatform = pools[selectedPlatform].getObject ();
 			newPlatform.transform.position = transform.position;

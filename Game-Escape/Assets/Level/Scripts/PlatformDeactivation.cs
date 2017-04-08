@@ -15,7 +15,6 @@ public class PlatformDeactivation : MonoBehaviour {
 	void Update () {
 		if (transform.position.x < platformToDestroy.transform.position.x) 
 		{
-			//Destroy (gameObject);
 			gameObject.SetActive (false);
 		}
 		
