@@ -13,11 +13,25 @@ public class PlatformerGenerator : MonoBehaviour {
 	public float distanceBetweenMin;
 	public float distanceBetweenMax;
 
-	public ObjectPooler pool;
+	private float oldWidth;
+	public ObjectPooler[] pools;
+
+	//public GameObject[] platforms;
+	private int selectedPlatform;
+	private float[] platformWidths;
+
 
 	// Use this for initialization
 	void Start () {
+
+		oldWidth = 4.5f;
 		platformWidth = platform.GetComponent<BoxCollider2D> ().size.x;	
+
+		platformWidths = new float[pools.Length];
+		for (int i = 0; i < pools.Length; i++) 
+		{
+			platformWidths[i] = pools[i].platform.GetComponent<BoxCollider2D> ().size.x;	
+		}
 	}
 	
 	// Update is called once per frame
@@ -26,11 +40,22 @@ public class PlatformerGenerator : MonoBehaviour {
 		{
 			distanceBetween = Random.Range (distanceBetweenMin,distanceBetweenMax);
 
-			transform.position = new Vector3 (transform.position.x + platformWidth + distanceBetween, transform.position.y, transform.position.z);
-			GameObject newPlatform = pool.getObject ();
+
+
+			selectedPlatform = Random.Range (0,pools.Length);
+
+			platformWidth = platformWidths [selectedPlatform];
+
+			transform.position = new Vector3 (transform.position.x + (platformWidths[selectedPlatform]/2) + oldWidth + distanceBetween, transform.position.y, transform.position.z);
+
+			//Instantiate (pools[selectedPlatform],transform.position,transform.rotation);
+
+			GameObject newPlatform = pools[selectedPlatform].getObject ();
 			newPlatform.transform.position = transform.position;
 			newPlatform.transform.rotation = transform.rotation;
 			newPlatform.SetActive (true);
+
+			oldWidth = platformWidths [selectedPlatform] / 2;
 		}
 	}
 }
