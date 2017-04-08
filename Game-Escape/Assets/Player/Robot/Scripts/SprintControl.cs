@@ -6,7 +6,7 @@ public class SprintControl : MonoBehaviour {
 
 	public float topSpeed = 10f;
 	private Rigidbody2D rg2d;
-	private bool facingRight = true;
+	//private bool facingRight = true;
 
 	private Animator anim;
 
@@ -26,13 +26,22 @@ public class SprintControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+
+		ground = Physics2D.OverlapCircle (groundCheck.position, groundRadius, grounded);
+
+		anim.SetBool ("Ground", ground);
+
+		anim.SetFloat ("vSpeed",rg2d.velocity.y);
+
+		rg2d.velocity = new Vector2 (topSpeed,rg2d.velocity.y);
+		anim.SetFloat ("Speed", rg2d.velocity.x);
 		if (ground && Input.GetKeyDown (KeyCode.Space))
 		{
 			anim.SetBool ("Ground", false);
 			rg2d.AddForce (new Vector2(0,jumpPower));
 		}
 	}
-
+	/* Used for full control of directions
 	void FixedUpdate()
 	{
 		ground = Physics2D.OverlapCircle (groundCheck.position, groundRadius, grounded);
@@ -53,7 +62,7 @@ public class SprintControl : MonoBehaviour {
 			Flip();
 		}
 	}
-
+		
 	void Flip()
 	{
 		facingRight = !facingRight;
@@ -61,4 +70,5 @@ public class SprintControl : MonoBehaviour {
 		scale.x *= -1;
 		transform.localScale = scale;
 	}
+	*/
 }
