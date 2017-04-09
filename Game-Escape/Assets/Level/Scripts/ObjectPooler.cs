@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour {
 
-	public GameObject platform;
+	public GameObject pooledObject;
 
 	public int poolAmount;
 
@@ -16,7 +16,7 @@ public class ObjectPooler : MonoBehaviour {
 
 		for (int i = 0; i < poolAmount; i++) 
 		{
-			GameObject obj = (GameObject) Instantiate (platform);
+			GameObject obj = (GameObject) Instantiate (pooledObject);
 			obj.SetActive (false);
 			pool.Add (obj);
 		}
@@ -33,7 +33,7 @@ public class ObjectPooler : MonoBehaviour {
 
 		}
 
-		GameObject obj = (GameObject) Instantiate (platform);
+		GameObject obj = (GameObject) Instantiate (pooledObject);
 		obj.SetActive (false);
 		pool.Add (obj);
 		return obj;

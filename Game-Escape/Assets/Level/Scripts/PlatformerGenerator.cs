@@ -24,6 +24,10 @@ public class PlatformerGenerator : MonoBehaviour {
 	private int selectedPlatform;
 	private float[] platformWidths;
 
+
+	private CoinGenerator coinGenerator; // coin generation
+	public int randomCoinThreshold;
+
 	// Use this for initialization
 	void Start () {
 
@@ -32,10 +36,13 @@ public class PlatformerGenerator : MonoBehaviour {
 		platformWidths = new float[pools.Length];
 		for (int i = 0; i < pools.Length; i++) 
 		{
-			platformWidths[i] = pools[i].platform.GetComponent<BoxCollider2D> ().size.x;	
+			platformWidths[i] = pools[i].pooledObject.GetComponent<BoxCollider2D> ().size.x;	
 		}
 		minHeight = transform.position.y;
 		maxHeight = maxHeightPoint.position.y;
+
+
+		coinGenerator = FindObjectOfType<CoinGenerator> (); // coin generation
 	}
 	
 	// Update is called once per frame
@@ -58,6 +65,10 @@ public class PlatformerGenerator : MonoBehaviour {
 			newPlatform.transform.rotation = transform.rotation;
 			newPlatform.SetActive (true);
 
+			if (Random.Range (0f, 100f) < randomCoinThreshold) 
+			{
+				coinGenerator.SpawnCoins (new Vector3 (transform.position.x, transform.position.y + 1f, transform.position.z));
+			}
 			oldWidth = platformWidths [selectedPlatform] / 2;
 		}
 	}
