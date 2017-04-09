@@ -128,7 +128,6 @@ public class playerControls : MonoBehaviour {
 
 	void OnCollisionEnter2D(Collision2D collision)
 	{
-		Debug.Log ("Reaching");
 		if (collision.gameObject.tag == "Death") 
 		{
 			Scene scene = SceneManager.GetActiveScene(); 
