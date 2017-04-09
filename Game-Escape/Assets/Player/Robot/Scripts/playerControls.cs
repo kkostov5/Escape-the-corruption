@@ -23,7 +23,10 @@ public class playerControls : MonoBehaviour {
 	public float jumpPower = 10f;
 	public float jumpTime;
 	private float jumpTimer;
+	private bool endJump;
+	private bool canDoubleJump;
 
+	public GameObject DeathMenu;
 
 	// Use this for initialization
 	void Start () {
@@ -32,6 +35,8 @@ public class playerControls : MonoBehaviour {
 		rg2d.isKinematic = false;
 		jumpTimer = jumpTime;
 		speedTargetCounter = speedTarget;
+		endJump = true;
+		canDoubleJump = true;
 	}
 
 	// Update is called once per frame
@@ -51,25 +56,41 @@ public class playerControls : MonoBehaviour {
 
 		rg2d.velocity = new Vector2 (speed,rg2d.velocity.y);
 
-		if (ground && Input.GetKeyDown (KeyCode.Space))
+		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			anim.SetBool ("Ground", false);
-			rg2d.velocity = new Vector2 (rg2d.velocity.x,jumpPower);
-			//rg2d.AddForce (new Vector2(0,jumpPower));
+			if (ground) 
+			{
+				anim.SetBool ("Ground", false);
+				rg2d.velocity = new Vector2 (rg2d.velocity.x, jumpPower);
+				//rg2d.AddForce (new Vector2(0,jumpPower));
+				endJump = false;
+			}
+			if (!ground && canDoubleJump) 
+			{
+				anim.SetBool ("Ground", false);
+				rg2d.velocity = new Vector2 (rg2d.velocity.x, jumpPower);
+				//rg2d.AddForce (new Vector2(0,jumpPower));
+				jumpTimer = jumpTime;
+				endJump = false;
+				canDoubleJump = false;
+			}
 		}
-		if (jumpTimer>0 && Input.GetKey (KeyCode.Space))
+		if (jumpTimer>0 && Input.GetKey (KeyCode.Space) && !endJump)
 		{
 			rg2d.velocity = new Vector2 (rg2d.velocity.x,jumpPower);
 			//rg2d.AddForce (new Vector2(0,jumpPower));
 			jumpTimer -= Time.deltaTime;
+
 		}
 		if (Input.GetKeyUp (KeyCode.Space))
 		{
 			jumpTimer = 0;
+			endJump = true;
 		}
 		if (ground) 
 		{
 			jumpTimer = jumpTime;
+			canDoubleJump = true;
 		}
 
 
@@ -130,8 +151,9 @@ public class playerControls : MonoBehaviour {
 	{
 		if (collision.gameObject.tag == "Death") 
 		{
-			Scene scene = SceneManager.GetActiveScene(); 
-			SceneManager.LoadScene(scene.name);
+			DeathMenu.SetActive (true);
+			gameObject.SetActive (false);
+			GameObject.Find ("ScoreManager").SetActive (false);
 		}
 	}
 }

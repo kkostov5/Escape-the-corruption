@@ -28,6 +28,9 @@ public class PlatformerGenerator : MonoBehaviour {
 	private CoinGenerator coinGenerator; // coin generation
 	public int randomCoinThreshold;
 
+	public ObjectPooler spikePool; // spike generation
+	public float randomSpikeThreshold;
+
 	// Use this for initialization
 	void Start () {
 
@@ -69,6 +72,20 @@ public class PlatformerGenerator : MonoBehaviour {
 			{
 				coinGenerator.SpawnCoins (new Vector3 (transform.position.x, transform.position.y + 1f, transform.position.z));
 			}
+
+			if (Random.Range (0f, 100f) < randomSpikeThreshold) 
+			{
+				GameObject spike = spikePool.getObject ();
+
+				float spikeXPosition = Random.Range (-platformWidths[selectedPlatform]/2 +1f,platformWidths[selectedPlatform]/2 -1f);
+
+				Vector3 spikePosition = new Vector3 (spikeXPosition, 0.5f, 0f);
+
+				spike.transform.position = transform.position+spikePosition;
+				spike.transform.rotation = transform.rotation;
+				spike.SetActive (true);
+			}
+
 			oldWidth = platformWidths [selectedPlatform] / 2;
 		}
 	}
