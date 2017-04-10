@@ -5,30 +5,36 @@ using UnityEngine.UI;
 
 public class ScoreManager : MonoBehaviour {
 
-	public Text score;
-	public Text highscore;
+	public Text scoreText;
+	public Text highscoreText;
 
-	public float scoreCount;
-	public float highscoreCount;
+	public static float score;
+	public float highscore;
 
 	public float pointsPerSecond;
 
-	public bool scoreIncreasing;
 	// Use this for initialization
-	void Start () {
-		if(PlayerPrefs.HasKey ("HighScore"))highscoreCount = PlayerPrefs.GetFloat ("HighScore");
+	void Start () 
+	{
+		score = 0f;
+		if(PlayerPrefs.HasKey ("HighScore"))highscore = PlayerPrefs.GetFloat ("HighScore");
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		scoreCount += pointsPerSecond * Time.deltaTime;
-		if(highscoreCount < scoreCount)
+		AddScore(pointsPerSecond * Time.deltaTime);
+		if(highscore < score)
 		{
-			highscoreCount = scoreCount;
-			PlayerPrefs.SetFloat ("HighScore",highscoreCount);
+			highscore = score;
+			PlayerPrefs.SetFloat ("HighScore",highscore);
 		}
-		score.text = "Score: " + Mathf.Round(scoreCount);
-		highscore.text = "High Score: " + Mathf.Round(highscoreCount);
+		scoreText.text = "Score: " + Mathf.Round(score);
+		highscoreText.text = "High Score: " + Mathf.Round(highscore);
+	}
+
+	public static void AddScore(float increase)
+	{
+		score += increase;
 	}
 }

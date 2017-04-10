@@ -29,6 +29,6 @@ public class PauseMenuHandler : MonoBehaviour {
 
 	public void BackToMainMenu()
 	{
-		Application.LoadLevel(mainMenuLevel);
+		SceneManager.LoadScene(mainMenuLevel);
 	}
 }

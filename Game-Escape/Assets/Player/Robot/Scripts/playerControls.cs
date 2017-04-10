@@ -50,6 +50,7 @@ public class playerControls : MonoBehaviour {
 		anim.SetBool ("Ground", ground);
 		anim.SetFloat ("Speed", rg2d.velocity.x);
 
+
 		if (transform.position.x > speedTargetCounter) 
 		{
 			speed = speed*speedMultiplier;
