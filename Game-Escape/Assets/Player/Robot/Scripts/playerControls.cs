@@ -38,14 +38,18 @@ public class playerControls : MonoBehaviour {
 		endJump = true;
 		canDoubleJump = true;
 	}
-
+	void FixedUpdate()
+	{
+		ground = Physics2D.OverlapCircle (groundCheck.position, groundRadius, grounded);
+	}
 	// Update is called once per frame
 	void Update () {
 
-		ground = Physics2D.OverlapCircle (groundCheck.position, groundRadius, grounded);
+
 		anim.SetFloat ("vSpeed",rg2d.velocity.y);
 		anim.SetBool ("Ground", ground);
 		anim.SetFloat ("Speed", rg2d.velocity.x);
+
 		if (transform.position.x > speedTargetCounter) 
 		{
 			speed = speed*speedMultiplier;
@@ -60,25 +64,18 @@ public class playerControls : MonoBehaviour {
 		{
 			if (ground) 
 			{
-				anim.SetBool ("Ground", false);
-				rg2d.velocity = new Vector2 (rg2d.velocity.x, jumpPower);
-				//rg2d.AddForce (new Vector2(0,jumpPower));
-				endJump = false;
+				Jump ();
 			}
 			if (!ground && canDoubleJump) 
 			{
-				anim.SetBool ("Ground", false);
-				rg2d.velocity = new Vector2 (rg2d.velocity.x, jumpPower);
-				//rg2d.AddForce (new Vector2(0,jumpPower));
+				Jump ();
 				jumpTimer = jumpTime;
-				endJump = false;
 				canDoubleJump = false;
 			}
 		}
 		if (jumpTimer>0 && Input.GetKey (KeyCode.Space) && !endJump)
 		{
 			rg2d.velocity = new Vector2 (rg2d.velocity.x,jumpPower);
-			//rg2d.AddForce (new Vector2(0,jumpPower));
 			jumpTimer -= Time.deltaTime;
 
 		}
@@ -94,6 +91,23 @@ public class playerControls : MonoBehaviour {
 		}
 
 
+	}
+
+	void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag == "Death") 
+		{
+			DeathMenu.SetActive (true);
+			gameObject.SetActive (false);
+			GameObject.Find ("ScoreManager").SetActive (false);
+		}
+	}
+
+	void Jump()
+	{
+		anim.SetBool ("Ground", false);
+		rg2d.velocity = new Vector2 (rg2d.velocity.x, jumpPower);
+		endJump = false;
 	}
 	/*
 	//Full Control
@@ -147,13 +161,5 @@ public class playerControls : MonoBehaviour {
 	}
 	*/
 
-	void OnCollisionEnter2D(Collision2D collision)
-	{
-		if (collision.gameObject.tag == "Death") 
-		{
-			DeathMenu.SetActive (true);
-			gameObject.SetActive (false);
-			GameObject.Find ("ScoreManager").SetActive (false);
-		}
-	}
+
 }
