@@ -15,6 +15,6 @@ public class DeathMenuHandler : MonoBehaviour {
 
 	public void BackToMainMenu()
 	{
-		Application.LoadLevel(mainMenuLevel);
+		SceneManager.LoadScene(mainMenuLevel);
 	}
 }

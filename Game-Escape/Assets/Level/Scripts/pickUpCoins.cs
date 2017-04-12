@@ -6,10 +6,8 @@ public class pickUpCoins : MonoBehaviour {
 
 	public int scoreEquivilant;
 
-	private ScoreManager scoreManager;
 	// Use this for initialization
 	void Start () {
-		scoreManager = FindObjectOfType<ScoreManager> ();
 	}
 	
 	// Update is called once per frame
@@ -21,7 +19,7 @@ public class pickUpCoins : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "Player") 
 		{
-			scoreManager.scoreCount += scoreEquivilant;
+			ScoreManager.AddScore(scoreEquivilant);
 			gameObject.SetActive (false);
 		}
 	}

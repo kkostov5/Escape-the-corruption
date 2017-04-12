@@ -4,11 +4,9 @@ using UnityEngine;
 
 public class PlatformerGenerator : MonoBehaviour {
 
-	public GameObject platform;
 	public Transform generationPoint;
-	public float distanceBetween;
 
-
+	private float distanceBetween;
 	public float distanceBetweenMin;
 	public float distanceBetweenMax;
 
@@ -18,14 +16,11 @@ public class PlatformerGenerator : MonoBehaviour {
 	public float maxHeightChange;
 	private float heightChange;
 
+	private float platformWidth;
 	private float oldWidth;
-	public ObjectPooler[] pools;
+	public ObjectPooler tilePool;
 
-	private int selectedPlatform;
-	private float[] platformWidths;
-
-
-	private CoinGenerator coinGenerator; // coin generation
+	public ObjectPooler coinPool;
 	public int randomCoinThreshold;
 
 	public ObjectPooler spikePool; // spike generation
@@ -34,18 +29,8 @@ public class PlatformerGenerator : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-		oldWidth = (platform.GetComponent<BoxCollider2D> ().size.x)/2;
-
-		platformWidths = new float[pools.Length];
-		for (int i = 0; i < pools.Length; i++) 
-		{
-			platformWidths[i] = pools[i].pooledObject.GetComponent<BoxCollider2D> ().size.x;	
-		}
 		minHeight = transform.position.y;
 		maxHeight = maxHeightPoint.position.y;
-
-
-		coinGenerator = FindObjectOfType<CoinGenerator> (); // coin generation
 	}
 	
 	// Update is called once per frame
@@ -54,39 +39,39 @@ public class PlatformerGenerator : MonoBehaviour {
 		{
 			distanceBetween = Random.Range (distanceBetweenMin,distanceBetweenMax);
 
-			selectedPlatform = Random.Range (0,pools.Length);
-
+			platformWidth = Random.Range (2,9);
+			bool coinCheck = false;
+			bool spikeCheck = false;
 			heightChange = transform.position.y + Random.Range(maxHeightChange,-maxHeightChange);
-
 			heightChange = Mathf.Clamp(heightChange, minHeight, maxHeight);
 
-			transform.position = new Vector3 (transform.position.x + (platformWidths[selectedPlatform]/2) + oldWidth + distanceBetween, heightChange, transform.position.z);
-
-
-			GameObject newPlatform = pools[selectedPlatform].getObject ();
-			newPlatform.transform.position = transform.position;
-			newPlatform.transform.rotation = transform.rotation;
-			newPlatform.SetActive (true);
-
-			if (Random.Range (0f, 100f) < randomCoinThreshold) 
+			for (int i = 1; i <= platformWidth; i++) 
 			{
-				coinGenerator.SpawnCoins (new Vector3 (transform.position.x, transform.position.y + 1f, transform.position.z));
+				GameObject newPlatform = tilePool.getObject ();
+				if(i==1)transform.position = new Vector3 (transform.position.x + 0.99f + distanceBetween, heightChange, transform.position.z);
+				else transform.position = new Vector3 (transform.position.x + 1f, heightChange, transform.position.z);
+				newPlatform.transform.position = transform.position;
+				newPlatform.transform.rotation = transform.rotation;
+				newPlatform.SetActive (true);
+				if (Random.Range (0f, 100f) < randomCoinThreshold && !coinCheck) 
+				{
+					GameObject coin = coinPool.getObject ();
+					Vector3 coinPosition = new Vector3 (0f, 1.5f, 0f);
+					coin.transform.position = transform.position+coinPosition;
+					coin.SetActive (true);
+					coinCheck = true;
+
+				}
+				if (Random.Range (0f, 100f) < randomSpikeThreshold && !spikeCheck) 
+				{
+					GameObject spike = spikePool.getObject ();
+					Vector3 spikePosition = new Vector3 (0f, spike.GetComponent<BoxCollider2D>().size.y/2, 0f);
+					spike.transform.position = transform.position+spikePosition;
+					spike.SetActive (true);
+					spikeCheck = true;
+				}
+				oldWidth = 0.5f;
 			}
-
-			if (Random.Range (0f, 100f) < randomSpikeThreshold) 
-			{
-				GameObject spike = spikePool.getObject ();
-
-				float spikeXPosition = Random.Range (-platformWidths[selectedPlatform]/2 +1f,platformWidths[selectedPlatform]/2 -1f);
-
-				Vector3 spikePosition = new Vector3 (spikeXPosition, 0.5f, 0f);
-
-				spike.transform.position = transform.position+spikePosition;
-				spike.transform.rotation = transform.rotation;
-				spike.SetActive (true);
-			}
-
-			oldWidth = platformWidths [selectedPlatform] / 2;
 		}
 	}
 }
