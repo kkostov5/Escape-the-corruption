@@ -16,17 +16,17 @@ public class PlayerController : MonoBehaviour,Observer {
 			{
 				Jump (obj);
 			}
-			if (!model.ground && model.canDoubleJump) 
+			if (!model.ground && model.doubleJump) 
 			{
 				Jump (obj);
 				model.jumpTimer = model.jumpTime;
-				model.canDoubleJump = false;
+				model.doubleJump = false;
 			}
 		}
 		else if (args == "Grounded") 
 		{
 			model.ground = true;
-			model.canDoubleJump = true;
+			model.doubleJump = true;
 		}
 		else if (args == "NotGrounded") 
 		{
@@ -37,9 +37,7 @@ public class PlayerController : MonoBehaviour,Observer {
 
 	void Jump(GameObject obj)
 	{
-		Debug.Log ("Trying to jump");
 		obj.GetComponent<Animator>().SetBool ("Ground", false);
 		obj.GetComponent<Rigidbody2D>().velocity = new Vector2 (obj.GetComponent<Rigidbody2D>().velocity.x, model.jumpPower);
-		model.endJump = false;
 	}
 }

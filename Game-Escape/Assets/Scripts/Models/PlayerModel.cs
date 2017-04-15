@@ -2,14 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel : MonoBehaviour 
+public class PlayerModel : View
 {
 	public float jumpPower = 10f;
-	public float jumpTime;
+	public float jumpTime = 0.5f;
 	public float jumpTimer;
-	public bool endJump;
-	public bool canDoubleJump;
-	public bool ground = true;
+	public bool _doubleJump;
+	public bool _ground;
 
+	public bool ground { get; set;}
+	public bool doubleJump { get; set;}
 		
 }

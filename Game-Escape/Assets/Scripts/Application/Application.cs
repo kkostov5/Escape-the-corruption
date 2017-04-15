@@ -10,7 +10,6 @@ public class Application : MonoBehaviour{
 	{
 		observers = new List<Observer>();
 		Observer[] controllers = GameObject.Find ("Controller").GetComponentsInChildren<Observer>();
-		Debug.Log(controllers.Length);
 		foreach(Observer b in controllers )
 		{
 			if(b!=null)
