@@ -7,7 +7,7 @@ public class playerControls : MonoBehaviour {
 
 	public float speed = 10f;
 	private Rigidbody2D rg2d;
-	private bool facingRight = true;
+	//private bool facingRight = true;
 
 	public float speedMultiplier;
 	public float speedTarget;
@@ -152,7 +152,7 @@ public class playerControls : MonoBehaviour {
 			jumpTimer = jumpTime;
 		}
 	}
-		
+
 	void Flip()
 	{
 		facingRight = !facingRight;

@@ -13,10 +13,10 @@ public class ObjectPooler : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		pool = new List<GameObject> ();
-
 		for (int i = 0; i < poolAmount; i++) 
 		{
 			GameObject obj = (GameObject) Instantiate (pooledObject);
+			obj.transform.parent = transform;
 			obj.SetActive (false);
 			pool.Add (obj);
 		}
