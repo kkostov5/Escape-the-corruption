@@ -7,7 +7,6 @@ public class MenuController : MonoBehaviour, Observer {
 
 	public GameObject PauseMenu;
 	public GameObject DeathMenu;
-	private float speed;
 
 	public void update(Object o, string args)
 	{
@@ -31,6 +30,9 @@ public class MenuController : MonoBehaviour, Observer {
 			player.GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.None;
 		}
 		else if (args == "Death") {
+			DeathMenu.SetActive (true);
+			player.GetComponent<CharacterView>().enabled = false;
+			player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 		}
 			
 	}
