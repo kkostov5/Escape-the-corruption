@@ -11,7 +11,6 @@ public class PlayerController : MonoBehaviour,Observer {
 		if (args == "Jump") 
 		{
 			GameObject obj = (GameObject) o;
-			Debug.Log (model.ground);
 			if (model.ground) 
 			{
 				Jump (obj);
@@ -23,9 +22,22 @@ public class PlayerController : MonoBehaviour,Observer {
 				model.doubleJump = false;
 			}
 		}
+		else if(args == "Longer Jump")
+		{
+			GameObject obj = (GameObject) o;
+			if (model.jumpTimer>0)
+			{
+				Jump (obj);
+				model.jumpTimer -= Time.deltaTime;
+			}
+		}
+		else if(args == "End Jump"){
+			model.jumpTimer = 0;
+		}
 		else if (args == "Grounded") 
 		{
 			model.ground = true;
+			model.jumpTimer = model.jumpTime;
 			model.doubleJump = true;
 		}
 		else if (args == "NotGrounded") 
@@ -37,7 +49,6 @@ public class PlayerController : MonoBehaviour,Observer {
 
 	void Jump(GameObject obj)
 	{
-		obj.GetComponent<Animator>().SetBool ("Ground", false);
 		obj.GetComponent<Rigidbody2D>().velocity = new Vector2 (obj.GetComponent<Rigidbody2D>().velocity.x, model.jumpPower);
 	}
 }

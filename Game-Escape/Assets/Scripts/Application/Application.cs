@@ -14,6 +14,7 @@ public class Application : MonoBehaviour{
 		{
 			if(b!=null)
 			{
+				Debug.Log (b);
 				observers.Add (b);
 			}
 		}

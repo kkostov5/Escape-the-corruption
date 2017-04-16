@@ -13,11 +13,22 @@ public class CharacterView : View {
 	// Update is called once per frame
 	void Update () {
 
+		gameObject.GetComponent<Animator> ().SetFloat ("vSpeed",gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
 		if (Input.GetKeyDown (KeyCode.Space))
 		{
-			Debug.Log ("Jump Key Pressed");
+
 			Notify (gameObject, "Jump");
+		}
+		if (Input.GetKey (KeyCode.Space))
+		{
+			Notify (gameObject, "Longer Jump");
+
+		}
+		if (Input.GetKeyUp (KeyCode.Space))
+		{
+			Notify (gameObject, "End Jump");
+
 		}
 	}
 

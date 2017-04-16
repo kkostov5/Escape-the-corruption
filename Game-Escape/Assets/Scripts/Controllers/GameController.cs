@@ -1,16 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour, Observer {
 
 	public GameModel model;
+	private float speed;
+	private Text score;
+	private Text highscore;
+	private bool pause;
 
 	public void update(Object o, string args)
 	{
+		GameObject obj = (GameObject)o;
 		if (args == "Generate Platform") 
 		{
-			GameObject obj = (GameObject)o;
+			
 			float distanceBetween = Random.Range (model.platformDistanceMin, model.platformDistanceMax);
 			float platformWidth = Random.Range (2, 9);
 			bool coinCheck = false;
@@ -19,7 +25,7 @@ public class GameController : MonoBehaviour, Observer {
 			platformHeightChange = Mathf.Clamp (platformHeightChange, model.platformHeightMin, model.platformHeightMax);
 
 			for (int i = 1; i <= platformWidth; i++) {
-				GameObject newPlatform = model.tilePooler.getObject ();
+				GameObject newPlatform = (GameObject) model.tilePooler.getObject ();
 				if (i == 1)
 					obj.transform.position = new Vector3 (obj.transform.position.x + 0.99f + distanceBetween, platformHeightChange, obj.transform.position.z);
 				else
@@ -27,6 +33,7 @@ public class GameController : MonoBehaviour, Observer {
 				newPlatform.transform.position = obj.transform.position;
 				newPlatform.transform.rotation = obj.transform.rotation;
 				newPlatform.SetActive (true);
+				newPlatform.GetComponent<Speed> ().speed = model.speed;
 				if (Random.Range (0f, 100f) < model.coinRate && !coinCheck) {
 					GameObject coin = model.coinPooler.getObject ();
 					Vector3 coinPosition = new Vector3 (0f, 1.5f, 0f);
@@ -44,21 +51,44 @@ public class GameController : MonoBehaviour, Observer {
 				}
 			}
 		}
+		if (args == "Deactivate") 
+		{
+			obj.SetActive (false);
+		}
+		if (args == "Pause") 
+		{
+			pause = true;
+			speed = model.speed;
+			model.speed = 0;
+		}
+		if (args == "Resume") 
+		{
+			pause = false;
+			model.speed = speed;
+		}
 	}
-	
+
+	void Start()
+	{
+		pause = false;
+		if(PlayerPrefs.HasKey ("HighScore"))model.highscore = PlayerPrefs.GetFloat ("HighScore");
+		score = GameObject.Find ("ScoreText").GetComponent<Text>();
+		highscore = GameObject.Find ("HighScoreText").GetComponent<Text>();
+
+	}
 
 	void Update()
 	{
 		GameObject[] tiles = GameObject.FindGameObjectsWithTag ("Ground");
-		Debug.Log (tiles.Length);
-		foreach (GameObject obj in tiles) 
+		foreach(GameObject obj in tiles)
 		{
-			Debug.Log ("HHHHH");
-			//obj.transform.position = new Vector2 (obj.transform.position.x-0.3f,obj.transform.position.y);
-			//obj.GetComponent<Speed> ().speed = 1f;
-			Speed blaj = (Speed)obj.GetComponent(typeof(Speed));
-			blaj.UpdateSpeed (model.speed);
+			if(obj!=null && obj.GetComponent<Speed>()!=null)
+			{
+				obj.GetComponent<Speed>().speed = model.speed;
+			}
 		}
+		if(!pause)model.increaseScore(Time.deltaTime);
+		score.text = "Score: " + Mathf.Round(model.score);
+		highscore.text = "High Score: " + Mathf.Round(model.highscore);
 	}
-		
 }

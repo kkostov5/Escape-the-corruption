@@ -98,9 +98,9 @@ public class playerControls : MonoBehaviour {
 	{
 		if (collision.gameObject.tag == "Death") 
 		{
-			DeathMenu.SetActive (true);
-			gameObject.SetActive (false);
-			GameObject.Find ("ScoreManager").SetActive (false);
+			//DeathMenu.SetActive (true);
+			//gameObject.SetActive (false);
+			//GameObject.Find ("ScoreManager").SetActive (false);
 		}
 	}
 

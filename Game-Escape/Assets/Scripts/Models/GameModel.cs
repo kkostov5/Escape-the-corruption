@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameModel : MonoBehaviour {
+public class GameModel: MonoBehaviour {
 	
-	public float speed = 10f;
+	public float speed = 0.3f;
 	public float speedMultiplier = 1.05f;
 	public float target = 100f;
 	private float speedRatio = 100f;
@@ -18,6 +18,9 @@ public class GameModel : MonoBehaviour {
 	public float platformHeightDifference;
 	public float platformHeightMax;
 	public float platformHeightMin;
+	public float score = 0;
+	public float highscore;
+	public float scoreMultiplier = 5;
 
 
 	public void increaseDifficulty()
@@ -28,5 +31,14 @@ public class GameModel : MonoBehaviour {
 		dangerRate += 0.5f;
 	}
 
+	public void increaseScore(float time)
+	{
+		score = score + (scoreMultiplier * time);
+		if (score > highscore) 
+		{
+			highscore = score;
+			PlayerPrefs.SetFloat ("HighScore",highscore);
+		}
+	}
 		
 }

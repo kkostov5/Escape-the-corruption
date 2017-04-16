@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class PlatformDeactivation : MonoBehaviour {
 
-	private GameObject platformToDestroy;
+	public GameObject platformToDestroy;
 
 	// Use this for initialization
 	void Start () {
-		platformToDestroy = GameObject.Find ("PlatformDeactivationPoint");
+		
 	}
 	
 	// Update is called once per frame

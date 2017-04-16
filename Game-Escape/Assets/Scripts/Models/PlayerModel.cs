@@ -6,7 +6,7 @@ public class PlayerModel : View
 {
 	public float jumpPower = 10f;
 	public float jumpTime = 0.5f;
-	public float jumpTimer;
+	public float jumpTimer = 0.5f;
 	public bool _doubleJump;
 	public bool _ground;
 
