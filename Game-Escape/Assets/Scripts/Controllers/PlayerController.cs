@@ -44,6 +44,10 @@ public class PlayerController : MonoBehaviour,Observer {
 		{
 			model.ground = false;
 		}
+		else if (args == "Death") 
+		{
+			model.ground = false;
+		}
 	}
 
 

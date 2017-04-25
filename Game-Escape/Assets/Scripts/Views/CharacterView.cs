@@ -32,5 +32,15 @@ public class CharacterView : View {
 		}
 	}
 
+	void OnTriggerEnter2D(Collider2D other) 
+	{
+		Debug.Log ("Player");
+		if (other.gameObject.tag == "Death") 
+		{
+			Debug.Log ("Died");
+			Notify (gameObject, "Death");
+		}
+	}
+
 
 }

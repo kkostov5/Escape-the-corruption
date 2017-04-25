@@ -51,10 +51,6 @@ public class GameController : MonoBehaviour, Observer {
 				}
 			}
 		}
-		if (args == "Deactivate") 
-		{
-			obj.SetActive (false);
-		}
 		if (args == "Pause") 
 		{
 			pause = true;
