@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GroundCheckView : View {
+public class GroundCheckView : Observable {
 
 	public LayerMask ground;
 

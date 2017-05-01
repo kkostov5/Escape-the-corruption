@@ -2,43 +2,69 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameModel: MonoBehaviour {
+public class GameModel: Observable {
 	
-	public float speed = 0.3f;
-	public float speedMultiplier = 1.05f;
-	public float target = 100f;
-	private float speedRatio = 100f;
+	private float _speed = 0.2f;
+	private float _speedMultiplier = 1.05f;
+	private float _speedTarget = 100f;
+	private float _speedRatio = 100f;
 	public ObjectPooler tilePooler;
 	public ObjectPooler coinPooler;
 	public ObjectPooler spikePooler;
-	public float dangerRate = 0f;
-	public float coinRate = 50f;
-	public float platformDistanceMax;
-	public float platformDistanceMin;
-	public float platformHeightDifference;
-	public float platformHeightMax;
-	public float platformHeightMin;
-	public float score = 0;
-	public float highscore;
-	public float scoreMultiplier = 5;
+	private float _dangerRate = 0f;
+	private float _coinRate = 50f;
+	private float _platformDistanceMax = 6f;
+	private float _platformDistanceMin = 3f;
+	private float _platformHeightDifference;
+	public float _platformHeightMax = 6f;
+	private float _platformHeightMin;
+	private float _score = 0f;
+	private float _highScore;
+	private float _scoreMultiplier = 5;
 
-
+	/// <summary>
+	/// Increases the difficulty.
+	/// </summary>
 	public void increaseDifficulty()
 	{
-		speed = speed*speedMultiplier;
-		speedRatio = speedRatio * speedMultiplier;
-		target += speedRatio;
-		dangerRate += 0.5f;
+//		speed = speed*speedMultiplier;
+//		speedRatio = speedRatio * speedMultiplier;
+//		target += speedRatio;
+//		dangerRate += 0.5f;
 	}
-
+	/// <summary>
+	/// Increases the score.
+	/// </summary>
+	/// <param name="time">Time.</param>
 	public void increaseScore(float time)
 	{
-		score = score + (scoreMultiplier * time);
-		if (score > highscore) 
+		_score = _score + (_scoreMultiplier * time);
+		if (_score > _highScore) 
 		{
-			highscore = score;
-			PlayerPrefs.SetFloat ("HighScore",highscore);
+			_highScore = _score;
+			PlayerPrefs.SetFloat ("HighScore",highScore);
 		}
 	}
+	/// <summary>
+	/// Gets or sets the speed.
+	/// </summary>
+	/// <value>The speed.</value>
+	public float Speed { get { return _speed; }set{ _speed = value;}}
+	/// <summary>
+	/// Gets or sets the score.
+	/// </summary>
+	/// <value>The score.</value>
+	public float Score { get { return _score; }set{ _score = value;}}
+	/// <summary>
+	/// Gets or sets the high score.
+	/// </summary>
+	/// <value>The high score.</value>
+	public float highScore { get { return _highScore; }set{ _highScore = value;}}
+	/// <summary>
+	/// Gets or sets the score multiplier.
+	/// </summary>
+	/// <value>The score multiplier.</value>
+	public float scoreMultiplier { get { return _speedMultiplier; }set{ _speedMultiplier = value;}}
+
 		
 }

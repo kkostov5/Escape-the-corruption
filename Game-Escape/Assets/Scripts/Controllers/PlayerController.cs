@@ -6,11 +6,12 @@ public class PlayerController : MonoBehaviour,Observer {
 
 	public PlayerModel model;
 
-	public void update(Object o, string args)
+	public void Operation(Object o, string operation)
 	{
-		if (args == "Jump") 
+		if (operation == "Jump") 
 		{
 			GameObject obj = (GameObject) o;
+
 			if (model.ground) 
 			{
 				Jump (obj);
@@ -22,7 +23,7 @@ public class PlayerController : MonoBehaviour,Observer {
 				model.doubleJump = false;
 			}
 		}
-		else if(args == "Longer Jump")
+		else if(operation == "Longer Jump")
 		{
 			GameObject obj = (GameObject) o;
 			if (model.jumpTimer>0)
@@ -31,26 +32,29 @@ public class PlayerController : MonoBehaviour,Observer {
 				model.jumpTimer -= Time.deltaTime;
 			}
 		}
-		else if(args == "End Jump"){
+		else if(operation == "End Jump"){
 			model.jumpTimer = 0;
 		}
-		else if (args == "Grounded") 
+		else if (operation == "Grounded") 
 		{
 			model.ground = true;
 			model.jumpTimer = model.jumpTime;
 			model.doubleJump = true;
 		}
-		else if (args == "NotGrounded") 
+		else if (operation == "NotGrounded") 
 		{
 			model.ground = false;
 		}
-		else if (args == "Death") 
+		else if (operation == "Death") 
 		{
 			model.ground = false;
 		}
 	}
 
-
+	/// <summary>
+	/// Jump the specified obj.
+	/// </summary>
+	/// <param name="obj">Object.</param>
 	void Jump(GameObject obj)
 	{
 		obj.GetComponent<Rigidbody2D>().velocity = new Vector2 (obj.GetComponent<Rigidbody2D>().velocity.x, model.jumpPower);

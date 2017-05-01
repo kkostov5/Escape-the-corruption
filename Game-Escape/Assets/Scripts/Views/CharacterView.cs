@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterView : View {
+public class CharacterView : Observable {
 
 
 	// Use this for initialization

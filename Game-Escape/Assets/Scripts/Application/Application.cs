@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Class that initializes the global variables.
+/// </summary>
 public class Application : MonoBehaviour{
 
 	public static List<Observer> observers;
@@ -14,7 +17,6 @@ public class Application : MonoBehaviour{
 		{
 			if(b!=null)
 			{
-				Debug.Log (b);
 				observers.Add (b);
 			}
 		}

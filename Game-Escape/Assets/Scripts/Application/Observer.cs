@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Inteface for the Observer objects.
+/// </summary>
 public interface Observer {
-
-	void update (Object o, string args);
+	void Operation (Object o, string operation);
 }

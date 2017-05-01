@@ -5,9 +5,7 @@ using UnityEngine;
 public class ObjectPooler : MonoBehaviour {
 
 	public GameObject pooledObject;
-
 	public int poolAmount;
-
 	private List<GameObject> pool;
 
 	// Use this for initialization
@@ -21,7 +19,10 @@ public class ObjectPooler : MonoBehaviour {
 			pool.Add (obj);
 		}
 	}
-	
+	/// <summary>
+	/// Gets the object.
+	/// </summary>
+	/// <returns>The object.</returns>
 	public GameObject getObject()
 	{
 		for (int i = 0; i < pool.Count; i++) 

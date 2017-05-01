@@ -2,15 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerModel : View
+/// <summary>
+/// Player model.
+/// </summary>
+public class PlayerModel : Observable
 {
-	public float jumpPower = 10f;
-	public float jumpTime = 0.5f;
-	public float jumpTimer = 0.5f;
-	public bool _doubleJump;
-	public bool _ground;
+	private float _jumpPower = 10f;
+	private float _jumpTime = 0.5f;
+	private float _jumpTimer = 0.5f;
+	private bool _doubleJump;
+	private bool _ground;
 
-	public bool ground { get; set;}
-	public bool doubleJump { get; set;}
+
+	public float jumpPower { get { return _jumpPower; }set{ _jumpPower = value;}}
+	public float jumpTime { get { return _jumpTime; }set{ _jumpTime = value;}}
+	public float jumpTimer { get { return _jumpTimer; }set{ _jumpTimer = value;}}
+	public bool ground { get { return _ground; }set{ _ground = value;}}
+	public bool doubleJump { get { return _doubleJump; }set{ _doubleJump = value;}}
 		
 }

@@ -8,28 +8,28 @@ public class MenuController : MonoBehaviour, Observer {
 	public GameObject PauseMenu;
 	public GameObject DeathMenu;
 
-	public void update(Object o, string args)
+	public void Operation(Object o, string operation)
 	{
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-		if (args == "Pause") {
+		if (operation == "Pause") {
 			PauseMenu.SetActive (true);
 			player.GetComponent<CharacterView>().enabled = false;
 			player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
 		}
-		else if (args == "BackToMain") {
+		else if (operation == "BackToMain") {
 			SceneManager.LoadScene("Menu");
 		}
-		else if (args == "Restart") {
+		else if (operation == "Restart") {
 			
 			Scene scene = SceneManager.GetActiveScene(); 
 			SceneManager.LoadScene(scene.name);
 		}
-		else if (args == "Resume") {
+		else if (operation == "Resume") {
 			PauseMenu.SetActive (false);
 			player.GetComponent<CharacterView>().enabled = true;
 			player.GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.None;
 		}
-		else if (args == "Death") {
+		else if (operation == "Death") {
 			DeathMenu.SetActive (true);
 			player.GetComponent<CharacterView>().enabled = false;
 			player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MenuView : View {
+public class MenuView : Observable {
 
 	public void Pause()
 	{

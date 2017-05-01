@@ -2,10 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Observable {
+public class Observable : MonoBehaviour, ObservableInterface {
 
-
-	void Notify(Object o, string change);
-	//void AddObserver(Object a);
-	//void RemoveObserver (Object a);
+	public void Notify(Object obj ,string change)
+	{
+		for (int i = 0; i < Application.observers.Count; i++) {
+			Application.observers [i].Operation (obj, change);
+		}
+	}
+		
 }
