@@ -4,17 +4,18 @@ using UnityEngine;
 
 public class GameModel: Observable {
 	
-	private float _speed = 0.2f;
+	private float _speed = 0.13f;
 	private float _speedMultiplier = 1.05f;
-	private float _speedTarget = 100f;
-	private float _speedRatio = 100f;
+	private float _speedTarget = 1f;
+	private float _speedRatio = 1f;
+	private float _time = 0f;
 	public ObjectPooler tilePooler;
 	public ObjectPooler coinPooler;
 	public ObjectPooler spikePooler;
-	private float _dangerRate = 0f;
-	private float _coinRate = 50f;
-	private float _platformDistanceMax = 6f;
-	private float _platformDistanceMin = 3f;
+//	private float _dangerRate = 0f;
+//	private float _coinRate = 50f;
+//	private float _platformDistanceMax = 6f;
+//	private float _platformDistanceMin = 3f;
 	private float _platformHeightDifference;
 	public float _platformHeightMax = 6f;
 	private float _platformHeightMin;
@@ -50,6 +51,17 @@ public class GameModel: Observable {
 	/// </summary>
 	/// <value>The speed.</value>
 	public float Speed { get { return _speed; }set{ _speed = value;}}
+	public void updateSpeed(float time)
+	{
+		_time += time;
+		if (_speed*_time > _speedTarget) {
+			_speed = _speed * _speedMultiplier;
+			_speedRatio = _speedRatio * _speedMultiplier;
+			_speedTarget += _speedRatio;
+			Notify (null,"SpeedUpdate");
+
+		}
+	}
 	/// <summary>
 	/// Gets or sets the score.
 	/// </summary>

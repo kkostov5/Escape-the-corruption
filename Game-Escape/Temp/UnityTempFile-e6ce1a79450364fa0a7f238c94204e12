@@ -104,7 +104,6 @@
 'Assets/Scripts/Views/CharacterView.cs'
 'Assets/Scripts/Views/DeactivateObject.cs'
 'Assets/Scripts/Views/GroundCheckView.cs'
-'Assets/Scripts/Views/MapGenerator.cs'
 'Assets/Scripts/Views/MenuView.cs'
 'Assets/Scripts/Views/Speed.cs'
 -r:'/Applications/Unity/Unity.app/Contents/MonoBleedingEdge/lib/mono/unity/System.Runtime.Serialization.dll'

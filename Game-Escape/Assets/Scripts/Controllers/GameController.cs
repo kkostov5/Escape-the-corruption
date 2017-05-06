@@ -33,6 +33,11 @@ public class GameController : MonoBehaviour, Observer {
 			model.Speed = speed;
 			speedAlteration ();
 		}
+		if (operation == "SpeedUpdate") 
+		{
+			speedAlteration ();
+			Debug.Log ("Speed " + model.Speed);
+		}
 	}
 
 	void Start()
@@ -52,6 +57,7 @@ public class GameController : MonoBehaviour, Observer {
 			if (last.transform.position.x < generationPoint.transform.position.x - Random.Range (3,6)) {
 				GeneratePlatform(generationPoint);
 			}
+			model.updateSpeed (Time.deltaTime);
 		}
 		score.text = "Score: " + Mathf.Round(model.Score);
 		highscore.text = "High Score: " + Mathf.Round(model.highScore);
@@ -69,6 +75,7 @@ public class GameController : MonoBehaviour, Observer {
 			}
 		}
 	}
+
 	public void GeneratePlatform(GameObject o)
 	{
 		int platformWidth = Random.Range (2,9);
