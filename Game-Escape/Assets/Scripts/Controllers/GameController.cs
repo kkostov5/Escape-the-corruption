@@ -38,6 +38,12 @@ public class GameController : MonoBehaviour, Observer {
 			speedAlteration ();
 			Debug.Log ("Speed " + model.Speed);
 		}
+		if (operation == "CoinCollection") 
+		{
+			model.increaseScore (20);
+			GameObject obj = (GameObject) o;
+			obj.SetActive(false);
+		}
 	}
 
 	void Start()
@@ -53,7 +59,7 @@ public class GameController : MonoBehaviour, Observer {
 	void Update()
 	{
 		if (!pause) {
-			model.increaseScore (Time.deltaTime);
+			model.increaseTimeScore (Time.deltaTime);
 			if (last.transform.position.x < generationPoint.transform.position.x - Random.Range (3,6)) {
 				GeneratePlatform(generationPoint);
 			}
@@ -66,13 +72,10 @@ public class GameController : MonoBehaviour, Observer {
 
 	public void speedAlteration()
 	{
-		GameObject[] tiles = GameObject.FindGameObjectsWithTag ("Ground");
-		foreach(GameObject obj in tiles)
+		Speed[] tiles = FindObjectsOfType(typeof(Speed)) as Speed[];
+		foreach(Speed obj in tiles)
 		{
-			if(obj!=null && obj.GetComponent<Speed>()!=null)
-			{
-				obj.GetComponent<Speed>().speed = model.Speed;
-			}
+			obj.GetComponent<Speed>().speed = model.Speed;
 		}
 	}
 
@@ -83,6 +86,8 @@ public class GameController : MonoBehaviour, Observer {
 		float height = last.transform.position.y + Random.Range(-model._platformHeightMax,model._platformHeightMax);
 		height = Mathf.Clamp(height, minHeight, maxHeight);
 		GameObject newPlatform;
+		bool coinCheck = false;
+		bool virusCheck = false;
 		for (int i = 1; i <= platformWidth; i++) 
 		{
 			newPlatform = model.tilePooler.getObject ();
@@ -92,6 +97,25 @@ public class GameController : MonoBehaviour, Observer {
 			newPlatform.GetComponent<Speed> ().UpdateSpeed (model.Speed);
 			newPlatform.SetActive (true);
 			last = newPlatform;
+			if (Random.Range (0f, 100f) < 100 && !coinCheck) 
+			{
+				GameObject coin = model.coinPooler.getObject ();
+				Vector3 coinPosition = new Vector3 (0f, 1.5f, 0f);
+				coin.transform.position = newPlatform.transform.position+coinPosition;
+				coin.GetComponent<Speed> ().UpdateSpeed (model.Speed);
+				coin.SetActive (true);
+				coinCheck = true;
+
+			}
+			if (Random.Range (0f, 100f) < -1 && !virusCheck) 
+			{
+				GameObject virus = model.virusPooler.getObject();
+				Vector3 virusPosition = new Vector3 (0f, 1.5f, 0f);
+				virus.transform.position = newPlatform.transform.position+virusPosition;
+				virus.GetComponent<Speed> ().UpdateSpeed (model.Speed);
+				virus.SetActive (true);
+				virusCheck = true;
+			}
 		}
 
 	}

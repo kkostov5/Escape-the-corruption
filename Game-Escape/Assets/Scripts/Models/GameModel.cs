@@ -5,13 +5,13 @@ using UnityEngine;
 public class GameModel: Observable {
 	
 	private float _speed = 0.13f;
-	private float _speedMultiplier = 1.05f;
+	private float _speedMultiplier = 1.02f;
 	private float _speedTarget = 1f;
 	private float _speedRatio = 1f;
 	private float _time = 0f;
 	public ObjectPooler tilePooler;
 	public ObjectPooler coinPooler;
-	public ObjectPooler spikePooler;
+	public ObjectPooler virusPooler;
 //	private float _dangerRate = 0f;
 //	private float _coinRate = 50f;
 //	private float _platformDistanceMax = 6f;
@@ -37,9 +37,18 @@ public class GameModel: Observable {
 	/// Increases the score.
 	/// </summary>
 	/// <param name="time">Time.</param>
-	public void increaseScore(float time)
+	public void increaseTimeScore(float time)
 	{
 		_score = _score + (_scoreMultiplier * time);
+		if (_score > _highScore) 
+		{
+			_highScore = _score;
+			PlayerPrefs.SetFloat ("HighScore",highScore);
+		}
+	}
+	public void increaseScore(float points)
+	{
+		_score = _score + points;
 		if (_score > _highScore) 
 		{
 			_highScore = _score;

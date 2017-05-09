@@ -11,6 +11,7 @@ public class MenuController : MonoBehaviour, Observer {
 	public void Operation(Object o, string operation)
 	{
 		GameObject player = GameObject.FindGameObjectWithTag ("Player");
+
 		if (operation == "Pause") {
 			PauseMenu.SetActive (true);
 			player.GetComponent<CharacterView>().enabled = false;

@@ -40,6 +40,11 @@ public class CharacterView : Observable {
 			Debug.Log ("Died");
 			Notify (gameObject, "Death");
 		}
+		if (other.gameObject.tag == "Coin") 
+		{
+			Debug.Log ("Collection");
+			Notify (other.gameObject, "CoinCollection");
+		}
 	}
 
 
