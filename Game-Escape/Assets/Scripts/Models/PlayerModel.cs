@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// Player model.
 /// </summary>
-public class PlayerModel : Observable
+public class PlayerModel
 {
 	private float _jumpPower = 10f;
 	private float _jumpTime = 0.5f;

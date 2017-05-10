@@ -7,15 +7,13 @@ public class MenuController : MonoBehaviour, Observer {
 
 	public GameObject PauseMenu;
 	public GameObject DeathMenu;
+	public GameObject button;
 
-	public void Operation(Object o, string operation)
+	public void Operation(Object obj, string operation)
 	{
-		GameObject player = GameObject.FindGameObjectWithTag ("Player");
-
 		if (operation == "Pause") {
 			PauseMenu.SetActive (true);
-			player.GetComponent<CharacterView>().enabled = false;
-			player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+			Time.timeScale = 0f;
 		}
 		else if (operation == "BackToMain") {
 			SceneManager.LoadScene("Menu");
@@ -24,16 +22,16 @@ public class MenuController : MonoBehaviour, Observer {
 			
 			Scene scene = SceneManager.GetActiveScene(); 
 			SceneManager.LoadScene(scene.name);
+			Time.timeScale = 1f;
 		}
 		else if (operation == "Resume") {
 			PauseMenu.SetActive (false);
-			player.GetComponent<CharacterView>().enabled = true;
-			player.GetComponent<Rigidbody2D> ().constraints = RigidbodyConstraints2D.None;
+			Time.timeScale = 1f;
 		}
 		else if (operation == "Death") {
 			DeathMenu.SetActive (true);
-			player.GetComponent<CharacterView>().enabled = false;
-			player.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;
+			button.SetActive (false);
+			Time.timeScale = 0f;
 		}
 			
 	}

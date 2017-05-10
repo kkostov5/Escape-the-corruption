@@ -6,13 +6,13 @@ using System.Threading;
 
 public class GameController : MonoBehaviour, Observer {
 
-	public GameModel model;
-	private float speed;
+	public ObjectPooler tilePooler;
+	public ObjectPooler coinPooler;
+	public ObjectPooler virusPooler;
+	private GameModel model;
 	private Text score;
 	private Text highscore;
 	private bool pause;
-	private GameObject MapGenerator;
-	private Thread th;
 	public GameObject last;
 	public float maxHeight;
 	public float minHeight;
@@ -20,18 +20,9 @@ public class GameController : MonoBehaviour, Observer {
 
 	public void Operation(Object o, string operation)
 	{
-		if (operation == "Pause" || operation == "Death") 
-		{
-			pause = true;
-			speed = model.Speed;
-			model.Speed = 0;
-			speedAlteration ();
-		}
-		if (operation == "Resume") 
-		{
-			pause = false;
-			model.Speed = speed;
-			speedAlteration ();
+		if (operation == "Death") {
+			Time.timeScale = 0f;
+
 		}
 		if (operation == "SpeedUpdate") 
 		{
@@ -40,7 +31,7 @@ public class GameController : MonoBehaviour, Observer {
 		}
 		if (operation == "CoinCollection") 
 		{
-			model.increaseScore (20);
+			model.Score.increaseScore (20);
 			GameObject obj = (GameObject) o;
 			obj.SetActive(false);
 		}
@@ -49,24 +40,22 @@ public class GameController : MonoBehaviour, Observer {
 	void Start()
 	{
 		
-		pause = false;
-		if(PlayerPrefs.HasKey ("HighScore"))model.highScore = PlayerPrefs.GetFloat ("HighScore");
+		model = new GameModel ();
 		score = GameObject.Find ("ScoreText").GetComponent<Text>();
 		highscore = GameObject.Find ("HighScoreText").GetComponent<Text>();
 		speedAlteration ();
+		Time.timeScale = 1f;
 	}
 
 	void Update()
 	{
-		if (!pause) {
-			model.increaseTimeScore (Time.deltaTime);
-			if (last.transform.position.x < generationPoint.transform.position.x - Random.Range (3,6)) {
-				GeneratePlatform(generationPoint);
-			}
-			model.updateSpeed (Time.deltaTime);
+		//model.increaseTimeScore (Time.deltaTime);
+		if (last.transform.position.x < generationPoint.transform.position.x - Random.Range (3, 6)) {
+			GeneratePlatform (generationPoint);
 		}
-		score.text = "Score: " + Mathf.Round(model.Score);
-		highscore.text = "High Score: " + Mathf.Round(model.highScore);
+		model.updateSpeed (Time.deltaTime);
+		//score.text = "Score: " + Mathf.Round(model.score);
+		//highscore.text = "High Score: " + Mathf.Round(model.highScore);
 
 	}
 
@@ -90,7 +79,7 @@ public class GameController : MonoBehaviour, Observer {
 		bool virusCheck = false;
 		for (int i = 1; i <= platformWidth; i++) 
 		{
-			newPlatform = model.tilePooler.getObject ();
+			newPlatform = tilePooler.getObject ();
 			if(i==1)current = new Vector2 (current.x, height);
 			else current = new Vector2 (current.x+ 1f, height);
 			newPlatform.transform.position = current;
@@ -99,7 +88,7 @@ public class GameController : MonoBehaviour, Observer {
 			last = newPlatform;
 			if (Random.Range (0f, 100f) < 100 && !coinCheck) 
 			{
-				GameObject coin = model.coinPooler.getObject ();
+				GameObject coin = coinPooler.getObject ();
 				Vector3 coinPosition = new Vector3 (0f, 1.5f, 0f);
 				coin.transform.position = newPlatform.transform.position+coinPosition;
 				coin.GetComponent<Speed> ().UpdateSpeed (model.Speed);
@@ -107,9 +96,9 @@ public class GameController : MonoBehaviour, Observer {
 				coinCheck = true;
 
 			}
-			if (Random.Range (0f, 100f) < -1 && !virusCheck) 
+			if (Random.Range (0f, 100f) < 5 && !virusCheck) 
 			{
-				GameObject virus = model.virusPooler.getObject();
+				GameObject virus = virusPooler.getObject();
 				Vector3 virusPosition = new Vector3 (0f, 1.5f, 0f);
 				virus.transform.position = newPlatform.transform.position+virusPosition;
 				virus.GetComponent<Speed> ().UpdateSpeed (model.Speed);

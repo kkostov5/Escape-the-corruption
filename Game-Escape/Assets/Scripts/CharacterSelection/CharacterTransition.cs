@@ -2,56 +2,84 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class CharacterTransition : MonoBehaviour {
-
+	/// <summary>
+	/// Characters.
+	/// </summary>
 	[System.Serializable]
 	public struct Characters
 	{
-		public Sprite[] colors;
+		public Sprite[] characterSprites;
+		public RuntimeAnimatorController[] anims;
 	}
+
+	public Characters[] characters;
+
 	public GameObject colorPanel;
-	public Characters[] sprites;
 	public GameObject nextButton;
 	public GameObject previousButton;
-	private int iteration;
+
+
+	private int characterIndex;
+	private int versionIndex;
 	private Image image;
+
 	// Use this for initialization
 	void Start () {
-		iteration = 0;
+		characterIndex = 0;
+		versionIndex = 0;
 		image = gameObject.GetComponent<Image> ();
 		previousButton.GetComponent<Button> ().interactable = false;
-		image.sprite = sprites[iteration].colors[0];
+		image.sprite = characters[characterIndex].characterSprites[versionIndex];
 	}
 
-	public void next()
+	void Update()
 	{
-		if (iteration == 0) {
+		image.sprite = characters [characterIndex].characterSprites [versionIndex];
+	}
+	/// <summary>
+	/// Next the character.
+	/// </summary>
+	public void NextCharacter()
+	{
+		if (characterIndex == 0) {
 			previousButton.GetComponent<Button> ().interactable = true;
 		}
-		iteration++;
-		transition ();
+		characterIndex++;
+		Transition ();
 	}
-
-	public void previous()
+	/// <summary>
+	/// Previous the character.
+	/// </summary>
+	public void PreviousCharacter()
 	{
-		if (iteration == sprites.Length - 1)
+		if (characterIndex == characters.Length - 1)
 		{
 			nextButton.GetComponent<Button> ().interactable = true;
 		}
-		iteration--;
-		transition ();
+		characterIndex--;
+		Transition ();
 	}
-	public void transition()
+	/// <summary>
+	/// Transition this instance.
+	/// </summary>
+	public void Transition()
 	{
-		image.sprite = sprites[iteration].colors[0];
-		if (iteration == 0) {
+		versionIndex = 0;
+
+		// Hides/Shows buttons if it is the last or first character
+		if (characterIndex == 0) 
+		{
 			previousButton.GetComponent<Button> ().interactable = false;
-		} else if (iteration == sprites.Length - 1)
+		} else if (characterIndex == characters.Length - 1)
 		{
 			nextButton.GetComponent<Button> ().interactable = false;
 		}
-		if (sprites [iteration].colors.Length == 1)
+
+		 //Hides/Shows the colorPanel if there are no other colors;
+		if (characters [characterIndex].characterSprites.Length == 1)
 		{
 			colorPanel.GetComponent<CanvasGroup> ().alpha = 0f;
 			colorPanel.GetComponent<CanvasGroup> ().blocksRaycasts = false;
@@ -61,13 +89,51 @@ public class CharacterTransition : MonoBehaviour {
 			colorPanel.GetComponent<CanvasGroup> ().blocksRaycasts = true;
 		}
 	}
+	/// <summary>
+	/// Changes the color.
+	/// </summary>
+	/// <param name="color">Color.</param>
 	public void changeColor(string color)
 	{
-		if (color == "blue") image.sprite = sprites[iteration].colors[0];
-		else if(color=="yellow") image.sprite = sprites[iteration].colors[1];
-		else if(color=="grey") image.sprite = sprites[iteration].colors[2];
-		else if(color=="pink") image.sprite = sprites[iteration].colors[3];
-		else if(color=="red") image.sprite = sprites[iteration].colors[4];
+		switch (color) {
+		case "blue":
+			versionIndex = 0;
+			break;
+		case "yellow":
+			versionIndex = 1;
+			break;
+		case "grey":
+			versionIndex = 2;
+			break;
+		case "pink":
+			versionIndex = 3;
+			break;
+		case "red":
+			versionIndex = 4;
+			break;
+		default:
+			break;
+		}
+	
+	}
+
+	/// <summary>
+	/// Back to Main Menu.
+	/// </summary>
+	public void Back()
+	{
+		SceneManager.LoadScene("Menu");
+	}
+
+	/// <summary>
+	/// Starts the level.
+	/// </summary>
+	public void StartLevel()
+	{
+		
+		Character.SetAnim (characters [characterIndex].anims [versionIndex]);
+		Character.SetSprite (characters [characterIndex].characterSprites [versionIndex]);
+		SceneManager.LoadScene("LevelScene");
 	}
 }
 

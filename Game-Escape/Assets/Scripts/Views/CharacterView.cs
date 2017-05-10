@@ -7,7 +7,8 @@ public class CharacterView : Observable {
 
 	// Use this for initialization
 	void Start () {
-
+		gameObject.GetComponent<SpriteRenderer>().sprite = Character.GetSprite ();
+		gameObject.GetComponent<Animator>().runtimeAnimatorController = Character.GetAnim ();
 	}
 
 	// Update is called once per frame
@@ -34,15 +35,12 @@ public class CharacterView : Observable {
 
 	void OnTriggerEnter2D(Collider2D other) 
 	{
-		Debug.Log ("Player");
 		if (other.gameObject.tag == "Death") 
 		{
-			Debug.Log ("Died");
 			Notify (gameObject, "Death");
 		}
 		if (other.gameObject.tag == "Coin") 
 		{
-			Debug.Log ("Collection");
 			Notify (other.gameObject, "CoinCollection");
 		}
 	}

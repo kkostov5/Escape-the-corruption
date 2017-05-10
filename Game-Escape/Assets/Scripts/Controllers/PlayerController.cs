@@ -50,7 +50,10 @@ public class PlayerController : MonoBehaviour,Observer {
 			model.ground = false;
 		}
 	}
-
+	void Start()
+	{
+		model = new PlayerModel ();
+	}
 	/// <summary>
 	/// Jump the specified obj.
 	/// </summary>
