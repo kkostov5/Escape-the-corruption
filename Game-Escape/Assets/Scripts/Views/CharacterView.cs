@@ -7,12 +7,13 @@ public class CharacterView : Observable {
 
 	// Use this for initialization
 	void Start () {
-		gameObject.GetComponent<SpriteRenderer>().sprite = Character.GetSprite ();
-		gameObject.GetComponent<Animator>().runtimeAnimatorController = Character.GetAnim ();
+		//gameObject.GetComponent<SpriteRenderer>().sprite = Character.GetSprite ();
+		//gameObject.GetComponent<Animator>().runtimeAnimatorController = Character.GetAnim ();
 	}
 
 	// Update is called once per frame
-	void Update () {
+	void Update () 
+	{
 
 		gameObject.GetComponent<Animator> ().SetFloat ("vSpeed",gameObject.GetComponent<Rigidbody2D>().velocity.y);
 

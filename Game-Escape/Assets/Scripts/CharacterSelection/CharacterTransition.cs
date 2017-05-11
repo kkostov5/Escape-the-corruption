@@ -13,6 +13,7 @@ public class CharacterTransition : MonoBehaviour {
 	{
 		public Sprite[] characterSprites;
 		public RuntimeAnimatorController[] anims;
+		public float scoreRequired;
 	}
 
 	public Characters[] characters;
@@ -20,7 +21,9 @@ public class CharacterTransition : MonoBehaviour {
 	public GameObject colorPanel;
 	public GameObject nextButton;
 	public GameObject previousButton;
+	public GameObject startButton;
 
+	public Text NotAccessible;
 
 	private int characterIndex;
 	private int versionIndex;
@@ -33,12 +36,19 @@ public class CharacterTransition : MonoBehaviour {
 		image = gameObject.GetComponent<Image> ();
 		previousButton.GetComponent<Button> ().interactable = false;
 		image.sprite = characters[characterIndex].characterSprites[versionIndex];
+		//PlayerPrefs.SetFloat ("HighScore", 0f);
 	}
 
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
 	void Update()
 	{
 		image.sprite = characters [characterIndex].characterSprites [versionIndex];
 	}
+
+
+
 	/// <summary>
 	/// Next the character.
 	/// </summary>
@@ -68,7 +78,14 @@ public class CharacterTransition : MonoBehaviour {
 	public void Transition()
 	{
 		versionIndex = 0;
-
+		if (characters [characterIndex].scoreRequired > PlayerPrefs.GetFloat ("HighScore")) {
+			NotAccessible.text = "You need " + characters [characterIndex].scoreRequired + " to unlock the character.";
+			NotAccessible.gameObject.SetActive (true);
+			startButton.SetActive (false);
+		} else {
+			NotAccessible.gameObject.SetActive (false);
+			startButton.SetActive (true);
+		}
 		// Hides/Shows buttons if it is the last or first character
 		if (characterIndex == 0) 
 		{

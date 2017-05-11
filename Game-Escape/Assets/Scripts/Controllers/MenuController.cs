@@ -13,7 +13,6 @@ public class MenuController : MonoBehaviour, Observer {
 	{
 		if (operation == "Pause") {
 			PauseMenu.SetActive (true);
-			Time.timeScale = 0f;
 		}
 		else if (operation == "BackToMain") {
 			SceneManager.LoadScene("Menu");
@@ -22,16 +21,13 @@ public class MenuController : MonoBehaviour, Observer {
 			
 			Scene scene = SceneManager.GetActiveScene(); 
 			SceneManager.LoadScene(scene.name);
-			Time.timeScale = 1f;
 		}
 		else if (operation == "Resume") {
 			PauseMenu.SetActive (false);
-			Time.timeScale = 1f;
 		}
 		else if (operation == "Death") {
 			DeathMenu.SetActive (true);
 			button.SetActive (false);
-			Time.timeScale = 0f;
 		}
 			
 	}

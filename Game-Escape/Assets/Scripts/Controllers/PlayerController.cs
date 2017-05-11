@@ -6,6 +6,11 @@ public class PlayerController : MonoBehaviour,Observer {
 
 	public PlayerModel model;
 
+	void Start()
+	{
+		model = new PlayerModel ();
+	}
+
 	public void Operation(Object o, string operation)
 	{
 		if (operation == "Jump") 
@@ -50,10 +55,7 @@ public class PlayerController : MonoBehaviour,Observer {
 			model.ground = false;
 		}
 	}
-	void Start()
-	{
-		model = new PlayerModel ();
-	}
+
 	/// <summary>
 	/// Jump the specified obj.
 	/// </summary>

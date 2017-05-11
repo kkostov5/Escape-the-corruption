@@ -20,6 +20,10 @@ public class Score  {
 		_scoreMultiplier = multiplier;
 	}
 
+	public float highScore {get {return _highScore;}}
+	public float score {get {return _score;}}
+	public float scoreMultiplier {get {return _scoreMultiplier;}set {_scoreMultiplier = value;}}
+
 	/// <summary>
 	/// Increases the score.
 	/// </summary>
@@ -36,16 +40,6 @@ public class Score  {
 		}
 		return false;
 	}
+		
 
-	/// <summary>
-	/// Gets the high score.
-	/// </summary>
-	/// <value>The high score.</value>
-	public float highScore {get {return _highScore;}}
-
-	/// <summary>
-	/// Gets the score.
-	/// </summary>
-	/// <value>The score.</value>
-	public float score {get {return _score;}}
 }

@@ -11,7 +11,9 @@ public class GroundCheckView : Observable {
 		if (Physics2D.OverlapCircle (gameObject.transform.position, 0.1f, ground)) 
 		{
 			Notify (gameObject.transform.parent.gameObject, "Grounded");
-		} else {
+		} 
+		else 
+		{
 			Notify (gameObject.transform.parent.gameObject, "NotGrounded");
 		}
 	}
