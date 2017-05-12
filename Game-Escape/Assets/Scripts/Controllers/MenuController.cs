@@ -15,10 +15,12 @@ public class MenuController : MonoBehaviour, Observer {
 			PauseMenu.SetActive (true);
 		}
 		else if (operation == "BackToMain") {
+			Time.timeScale = 1f;
 			SceneManager.LoadScene("Menu");
 		}
 		else if (operation == "Restart") {
-			
+
+			Time.timeScale = 1f;
 			Scene scene = SceneManager.GetActiveScene(); 
 			SceneManager.LoadScene(scene.name);
 		}

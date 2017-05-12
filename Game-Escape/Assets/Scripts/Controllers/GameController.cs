@@ -26,7 +26,6 @@ public class GameController : MonoBehaviour, Observer {
 		score = GameObject.Find ("ScoreText").GetComponent<Text>();
 		highscore = GameObject.Find ("HighScoreText").GetComponent<Text>();
 
-		Time.timeScale = 1f;
 	}
 
 	void Update()
