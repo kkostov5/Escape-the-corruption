@@ -20,4 +20,8 @@ public class MenuView : Observable {
 	{
 		Notify (gameObject,"BackToMain");
 	}
+	public void SaveScore()
+	{
+		Notify (gameObject,"SaveScore");
+	}
 }

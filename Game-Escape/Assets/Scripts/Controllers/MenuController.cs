@@ -5,18 +5,18 @@ using UnityEngine.SceneManagement;
 
 public class MenuController : MonoBehaviour, Observer {
 
-	public GameObject PauseMenu;
 	public GameObject DeathMenu;
 	public GameObject button;
 
 	public void Operation(Object obj, string operation)
 	{
-		if (operation == "Pause") {
-			PauseMenu.SetActive (true);
-		}
-		else if (operation == "BackToMain") {
+		if (operation == "BackToMain") {
 			Time.timeScale = 1f;
 			SceneManager.LoadScene("Menu");
+		}
+		else if (operation == "Pause") {
+			Time.timeScale = 0f;
+			button.SetActive (false);
 		}
 		else if (operation == "Restart") {
 
@@ -25,9 +25,11 @@ public class MenuController : MonoBehaviour, Observer {
 			SceneManager.LoadScene(scene.name);
 		}
 		else if (operation == "Resume") {
-			PauseMenu.SetActive (false);
+			Time.timeScale = 1f;
+			button.SetActive (true);
 		}
 		else if (operation == "Death") {
+			Time.timeScale = 0f;
 			DeathMenu.SetActive (true);
 			button.SetActive (false);
 		}

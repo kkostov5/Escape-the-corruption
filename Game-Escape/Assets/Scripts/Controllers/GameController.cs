@@ -36,6 +36,7 @@ public class GameController : MonoBehaviour, Observer {
 			if (last.transform.position.x < generationPoint.transform.position.x - model.Platform.getPlatformDistance()) { //fix range
 				generatePlatform (generationPoint);
 			}
+
 			model.GameSpeed.updateSpeed (Time.deltaTime);
 
 			model.Score.increaseScore (Time.deltaTime);
@@ -47,16 +48,10 @@ public class GameController : MonoBehaviour, Observer {
 
 	public void Operation(Object o, string operation)
 	{
-		if (operation == "Death") {
-			Time.timeScale = 0f;
-			model.GameSpeed.stopSpeed();
-		}
-		if (operation == "Pause") {
-			Time.timeScale = 0f;
+		if (operation == "Death" || operation == "Pause") {
 			model.GameSpeed.stopSpeed();
 		}
 		else if (operation == "Resume") {
-			Time.timeScale = 1f;
 			model.GameSpeed.resetSpeed();
 		}
 		if (operation == "CoinCollection") 
@@ -126,4 +121,20 @@ public class GameController : MonoBehaviour, Observer {
 		return false;
 	}
 
+//	IEnumerator  ffff()
+//	{
+//		WWWForm form = new WWWForm(); //here you create a new form connection
+//		form.AddField( "myform_hash",  ); //add your hash code to the field myform_hash, check that this variable name is the same as in PHP file
+//		form.AddField( "myform_nick",  );
+//		form.AddField( "myform_pass",  );
+//		WWW w = WWW(URL, form); //here we create a var called 'w' and we sync with our URL and the form
+//		yield w; //we wait for the form to check the PHP file, so our game dont just hang
+//		if (w.error != null) {
+//			print(w.error); //if there is an error, tell us
+//		} else {
+//			print("Test ok");
+//			formText = w.data; //here we return the data our PHP told us
+//			w.Dispose(); //clear our form in game
+//		}
+//	}
 }
