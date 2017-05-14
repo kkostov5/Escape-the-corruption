@@ -17,17 +17,17 @@ public class CharacterView : Observable {
 
 		gameObject.GetComponent<Animator> ().SetFloat ("vSpeed",gameObject.GetComponent<Rigidbody2D>().velocity.y);
 
-		if (Input.GetKeyDown (KeyCode.Space))
+		if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0))
 		{
 
 			Notify (gameObject, "Jump");
 		}
-		if (Input.GetKey (KeyCode.Space))
+		if (Input.GetKey (KeyCode.Space) || Input.GetMouseButton (0))
 		{
 			Notify (gameObject, "Longer Jump");
 
 		}
-		if (Input.GetKeyUp (KeyCode.Space))
+		if (Input.GetKeyUp (KeyCode.Space) || Input.GetMouseButtonUp (0))
 		{
 			Notify (gameObject, "End Jump");
 
@@ -40,10 +40,30 @@ public class CharacterView : Observable {
 		{
 			Notify (gameObject, "Death");
 		}
+		if (other.gameObject.tag == "Danger") 
+		{
+			Notify (gameObject, "Death");
+		}
 		if (other.gameObject.tag == "Coin") 
 		{
 			Notify (other.gameObject, "CoinCollection");
+			other.gameObject.SetActive (false);
 		}
+		if (other.gameObject.tag == "DoubleUp") 
+		{
+			Notify (other.gameObject, "DoubleUp");
+			other.gameObject.SetActive (false);
+		}
+		if (other.gameObject.tag == "ShieldUp") 
+		{
+			Notify (other.gameObject, "ShieldUp",gameObject);
+		}
+		if (other.gameObject.tag == "SlowDown") 
+		{
+			Notify (other.gameObject, "SlowDown");
+			other.gameObject.SetActive (false);
+		}
+
 	}
 
 

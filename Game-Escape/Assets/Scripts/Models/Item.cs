@@ -4,20 +4,20 @@ using UnityEngine;
 
 public class Item {
 
-	private float threshold;
+	private float rate;
 
-	public Item(float threshold)
+	public Item(float rate)
 	{
-		this.threshold = threshold;
+		this.rate = rate;
 	}
 		
 
-	public float Threshold {
+	public float Rate {
 		get {
-			return threshold;
+			return rate;
 		}
 		set {
-			threshold = value;
+			rate = value;
 		}
 	}
 }

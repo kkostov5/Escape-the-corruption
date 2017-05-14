@@ -9,13 +9,15 @@ public  class Speed  {
 	private float speedTarget;
 	private float speedRatio;
 	private float saveSpeed;
+	private float maxSpeed;
 	private float time ;
 
-	public Speed(float speed,float speedMultiplier,float speedTarget)
+	public Speed(float speed,float speedMultiplier,float speedTarget, float maxSpeed)
 	{
 		Speed.speed = speed;
 		this.speedMultiplier = speedMultiplier;
 		this.speedTarget = speedTarget;
+		this.maxSpeed = maxSpeed;
 		speedRatio = speedTarget;
 		time = 0;
 		saveSpeed = 0;
@@ -24,6 +26,7 @@ public  class Speed  {
 	public static float getSpeed(){ return Speed.speed;}
 	public float SpeedValue {get {return speed;}set {speed = value;}}
 	public float SpeedMultiplier {get {return speedMultiplier;}set { speedMultiplier = value; }}
+	public float MaxSpeed {	get {return maxSpeed;}set {maxSpeed = value;}}
 
 	/// <summary>
 	/// Updates the speed.
@@ -32,6 +35,8 @@ public  class Speed  {
 	public bool updateSpeed(float timeUpdate)
 	{
 		time += timeUpdate;
+		if (maxSpeed < speed)
+			return false;
 		if (speed*time > speedTarget) {
 			speed = speed * speedMultiplier;
 			speedRatio = speedRatio * speedMultiplier;

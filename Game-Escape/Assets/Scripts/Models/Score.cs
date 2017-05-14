@@ -8,12 +8,7 @@ public class Score  {
 	private float _highScore;
 	private float _scoreMultiplier;
 
-	/// <summary>
-	/// Initializes a new instance of the <see cref="Score"/> class.
-	/// </summary>
-	/// <param name="score">Score.</param>
-	/// <param name="multiplier">Multiplier.</param>
-	public Score(float score = 0f,float multiplier = 5f)
+	public Score(float score = 0f,float multiplier = 1f)
 	{
 		_score = score;
 		if(PlayerPrefs.HasKey ("HighScore"))_highScore = PlayerPrefs.GetFloat ("HighScore");
@@ -31,7 +26,7 @@ public class Score  {
 	/// <param name="points">Points.</param>
 	public bool increaseScore(float points)
 	{
-		_score += points;
+		_score += (points*_scoreMultiplier);
 		if (_score > _highScore) 
 		{
 			_highScore = _score;
