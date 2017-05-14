@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.Security.Cryptography;
 
 public class DatabaseLoading : MonoBehaviour {
 
@@ -28,10 +29,10 @@ public class DatabaseLoading : MonoBehaviour {
 			score = data[i].Substring (data[i].IndexOf (catergoryScore) + catergoryScore.Length);
 			if (score.Contains ("|"))score = score.Remove (score.IndexOf ("|"));
 			if (name.Contains ("|"))name =  name.Remove (name.IndexOf ("|"));
-			PresentEntry (i, name, score);
+			PresentEntry (i+1, name, score);
 		}
-		position = (EntryPrefab.GetComponent<RectTransform>().rect.height+gameObject.GetComponent<VerticalLayoutGroup>().spacing) * data.Length ;
-		gameObject.GetComponent<RectTransform> ().sizeDelta = new Vector2 (gameObject.GetComponent<RectTransform>().sizeDelta.x,gameObject.GetComponent<RectTransform>().sizeDelta.y+position);
+		//position = (EntryPrefab.GetComponent<RectTransform>().rect.height+gameObject.GetComponent<VerticalLayoutGroup>().spacing) * data.Length ;
+		//gameObject.GetComponent<RectTransform> ().sizeDelta = new Vector2 (gameObject.GetComponent<RectTransform>().sizeDelta.x,gameObject.GetComponent<RectTransform>().sizeDelta.y+position);
 	}
 
 	void PresentEntry(int position,string name, string score)

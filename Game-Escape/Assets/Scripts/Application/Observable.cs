@@ -8,10 +8,10 @@ public class Observable : MonoBehaviour, ObservableInterface {
 	/// </summary>
 	/// <param name="obj">Object.</param>
 	/// <param name="change">Change.</param>
-	public void Notify(Object obj ,string action)
+	public void Notify(Object obj ,string action,params object[] data)
 	{
 		for (int i = 0; i < ObserverList.observers.Count; i++) {
-			ObserverList.observers [i].Operation (obj, action);
+			ObserverList.observers [i].Operation (obj, action,data);
 		}
 	}
 		

@@ -11,7 +11,7 @@ public class PlayerController : MonoBehaviour,Observer {
 		model = new PlayerModel ();
 	}
 
-	public void Operation(Object o, string operation)
+	public void Operation(Object o, string operation,params object[] data)
 	{
 		if (operation == "Jump") 
 		{

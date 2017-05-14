@@ -5,7 +5,7 @@ using UnityEngine;
 public class AnimationController : MonoBehaviour,Observer {
 
 
-	public void Operation(Object o, string operation)
+	public void Operation(Object o, string operation, params object[] data)
 	{
 		GameObject obj = (GameObject) o;
 		if (operation == "Jump") 

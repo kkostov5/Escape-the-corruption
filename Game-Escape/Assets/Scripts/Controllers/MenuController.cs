@@ -8,7 +8,7 @@ public class MenuController : MonoBehaviour, Observer {
 	public GameObject DeathMenu;
 	public GameObject button;
 
-	public void Operation(Object obj, string operation)
+	public void Operation(Object obj, string operation,params object[] data)
 	{
 		if (operation == "BackToMain") {
 			Time.timeScale = 1f;

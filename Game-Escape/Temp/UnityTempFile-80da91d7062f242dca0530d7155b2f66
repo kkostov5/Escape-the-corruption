@@ -106,6 +106,7 @@
 'Assets/Scripts/Views/DeactivateObject.cs'
 'Assets/Scripts/Views/GroundCheckView.cs'
 'Assets/Scripts/Views/MenuView.cs'
+'Assets/Scripts/Views/SavingScoreinDB.cs'
 'Assets/Scripts/Views/SpeedScript.cs'
 -r:'/Applications/Unity/Unity.app/Contents/MonoBleedingEdge/lib/mono/unity/System.Runtime.Serialization.dll'
 -r:'/Applications/Unity/Unity.app/Contents/MonoBleedingEdge/lib/mono/unity/System.Xml.Linq.dll'

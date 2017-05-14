@@ -83,6 +83,7 @@
 'Assets/Scripts/Application/ObservableInterface.cs'
 'Assets/Scripts/Application/Observer.cs'
 'Assets/Scripts/Application/ObserverList.cs'
+'Assets/Scripts/Application/SavingScore.cs'
 'Assets/Scripts/CharacterSelection/Character.cs'
 'Assets/Scripts/CharacterSelection/CharacterTransition.cs'
 'Assets/Scripts/Controllers/AnimationController.cs'

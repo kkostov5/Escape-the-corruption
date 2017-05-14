@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Threading;
 
+
 public class GameController : MonoBehaviour, Observer {
 
 	public ObjectPooler tilePooler;
@@ -46,7 +47,7 @@ public class GameController : MonoBehaviour, Observer {
 
 	}
 
-	public void Operation(Object o, string operation)
+	public void Operation(Object o, string operation,params object[] data)
 	{
 		if (operation == "Death" || operation == "Pause") {
 			model.GameSpeed.stopSpeed();
@@ -59,6 +60,11 @@ public class GameController : MonoBehaviour, Observer {
 			model.Score.increaseScore (20);
 			GameObject obj = (GameObject) o;
 			obj.SetActive(false);
+		}
+		if (operation == "SaveScore") 
+		{
+			StartCoroutine (SaveScore (data[0].ToString(),Mathf.Round (model.Score.score)));
+
 		}
 	}
 
@@ -121,20 +127,13 @@ public class GameController : MonoBehaviour, Observer {
 		return false;
 	}
 
-//	IEnumerator  ffff()
-//	{
-//		WWWForm form = new WWWForm(); //here you create a new form connection
-//		form.AddField( "myform_hash",  ); //add your hash code to the field myform_hash, check that this variable name is the same as in PHP file
-//		form.AddField( "myform_nick",  );
-//		form.AddField( "myform_pass",  );
-//		WWW w = WWW(URL, form); //here we create a var called 'w' and we sync with our URL and the form
-//		yield w; //we wait for the form to check the PHP file, so our game dont just hang
-//		if (w.error != null) {
-//			print(w.error); //if there is an error, tell us
-//		} else {
-//			print("Test ok");
-//			formText = w.data; //here we return the data our PHP told us
-//			w.Dispose(); //clear our form in game
-//		}
-//	}
+	IEnumerator SaveScore(string username, float score){
+		Debug.Log ("SavingScore");
+		string SavingScore = "https://zeno.computing.dundee.ac.uk/2016-ac32006/krasimirkostov/SavingScore.php";
+		WWWForm form = new WWWForm();
+		form.AddField("name", username);
+		form.AddField("score", (int) score);
+		WWW www = new WWW(SavingScore, form);
+		yield return www;
+	}
 }

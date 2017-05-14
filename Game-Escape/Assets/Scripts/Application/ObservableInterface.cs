@@ -7,6 +7,6 @@ using UnityEngine;
 /// </summary>
 public interface ObservableInterface {
 	
-	void Notify(Object obj, string change);
+	void Notify(Object obj, string change, params object[] data);
 
 }
