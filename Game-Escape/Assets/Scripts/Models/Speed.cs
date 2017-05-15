@@ -11,6 +11,7 @@ public  class Speed  {
 	private float saveSpeed;
 	private float maxSpeed;
 	private float time ;
+	private Stack<float> decreasedSpeed;
 
 	public Speed(float speed,float speedMultiplier,float speedTarget, float maxSpeed)
 	{
@@ -21,6 +22,7 @@ public  class Speed  {
 		speedRatio = speedTarget;
 		time = 0;
 		saveSpeed = 0;
+		decreasedSpeed = new Stack<float> ();
 	}
 
 	public static float getSpeed(){ return Speed.speed;}
@@ -56,11 +58,16 @@ public  class Speed  {
 		speed = 0;
 	}
 
+	public void slowSpeed(float decrease)
+	{
+		decreasedSpeed.Push(speed);
+		speed = speed/decrease;
+	}
 	/// <summary>
 	/// Resets the speed.
 	/// </summary>
 	public void resetSpeed()
 	{
-		speed = saveSpeed;
+		speed = decreasedSpeed.Pop();
 	}
 }

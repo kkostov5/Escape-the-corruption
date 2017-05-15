@@ -24,17 +24,6 @@ public class AnimationController : MonoBehaviour,Observer {
 			obj.GetComponent<Animator> ().SetBool ("Speed", false);
 			obj.GetComponent<Animator>().SetBool("Ground",false);
 		}
-		else if (operation == "Pause") 
-		{
-			obj.GetComponent<Animator> ().SetBool ("Speed", false);
-			obj.GetComponent<Animator>().SetBool("Ground",false);
-		}
-		else if (operation == "Resume") 
-		{
-			obj.GetComponent<Animator>().SetBool("Ground",true);
-			obj.GetComponent<Animator> ().SetBool ("Speed", true);
-
-		}
 	}
 		
 }

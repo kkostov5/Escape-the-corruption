@@ -19,18 +19,15 @@ public class CharacterView : Observable {
 
 		if (Input.GetKeyDown (KeyCode.Space) || Input.GetMouseButtonDown (0))
 		{
-
 			Notify (gameObject, "Jump");
 		}
 		if (Input.GetKey (KeyCode.Space) || Input.GetMouseButton (0))
 		{
 			Notify (gameObject, "Longer Jump");
-
 		}
 		if (Input.GetKeyUp (KeyCode.Space) || Input.GetMouseButtonUp (0))
 		{
 			Notify (gameObject, "End Jump");
-
 		}
 	}
 
@@ -40,7 +37,7 @@ public class CharacterView : Observable {
 		{
 			Notify (gameObject, "Death");
 		}
-		if (other.gameObject.tag == "Danger") 
+		else if (other.gameObject.tag == "Danger") 
 		{
 			if(!shielded)Notify (gameObject, "Death");
 			if (shielded) {
@@ -48,22 +45,25 @@ public class CharacterView : Observable {
 				shielded = false;
 			}
 		}
-		if (other.gameObject.tag == "Coin") 
+		else if (other.gameObject.tag == "Coin") 
 		{
 			Notify (other.gameObject, "CoinCollection");
 			other.gameObject.SetActive (false);
 		}
-		if (other.gameObject.tag == "DoubleUp") 
+		else if (other.gameObject.tag == "DoubleUp") 
 		{
 			Notify (other.gameObject, "DoubleUp");
 			other.gameObject.SetActive (false);
 		}
-		if (other.gameObject.tag == "ShieldUp") 
+		else if (other.gameObject.tag == "ShieldUp") 
 		{
-			shielded = true;
-			Notify (other.gameObject, "ShieldUp",gameObject);
+			if (!shielded) {
+				shielded = true;
+				Notify (other.gameObject, "ShieldUp", gameObject);
+			} else
+				other.gameObject.SetActive (false);
 		}
-		if (other.gameObject.tag == "SlowDown") 
+		else if (other.gameObject.tag == "SlowDown") 
 		{
 			if(!shielded)Notify (other.gameObject, "SlowDown");
 			if (shielded) {

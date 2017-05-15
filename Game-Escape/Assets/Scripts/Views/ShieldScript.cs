@@ -23,6 +23,14 @@ public class ShieldScript : Observable {
 		transform.parent = character.transform;
 		dirtyFlag = true;
 		GetComponent<CircleCollider2D> ().enabled = false;
+		//gameObject.transform.localScale = 
+	}
+	public void reset(GameObject obj)
+	{
+		character = null;
+		transform.parent = obj.transform;
+		dirtyFlag = false;
+		GetComponent<CircleCollider2D> ().enabled = true;
 	}
 		
 }

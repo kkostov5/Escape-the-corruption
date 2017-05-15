@@ -19,12 +19,14 @@ public class GameController : MonoBehaviour, Observer {
 
 	private float probabilityOfItems;
 
+	private bool multiplied = false;
+
 
 	void Start()
 	{
 		model = new GameModel ();
 
-		probabilityOfItems = 90;
+		probabilityOfItems = 20f;
 		score = GameObject.Find ("ScoreText").GetComponent<Text>();
 		highscore = GameObject.Find ("HighScoreText").GetComponent<Text>();
 
@@ -50,6 +52,12 @@ public class GameController : MonoBehaviour, Observer {
 
 	}
 
+	/// <summary>
+	/// Operation the specified o, operation and data.
+	/// </summary>
+	/// <param name="o">O.</param>
+	/// <param name="operation">Operation.</param>
+	/// <param name="data">Data.</param>
 	public void Operation(Object o, string operation,params object[] data)
 	{
 		if (operation == "Death" || operation == "Pause") {
@@ -58,36 +66,40 @@ public class GameController : MonoBehaviour, Observer {
 		else if (operation == "Resume") {
 			model.GameSpeed.resetSpeed();
 		}
-		if (operation == "CoinCollection") 
+		else if (operation == "CoinCollection") 
 		{
 			model.Score.increaseScore (20);
 		}
-		if (operation == "SaveScore") 
+		else if (operation == "SaveScore") 
 		{
 			StartCoroutine (SaveScore (data[0].ToString(),Mathf.Round (model.Score.score)));
 
 		}
-		if (operation == "DoubleUp") 
+		else if (operation == "DoubleUp") 
 		{
-			lock(StartCoroutine(DoubleUp ()));
-
+			if(!multiplied)
+			{
+				StartCoroutine (DoubleUp ());
+			}
 		}
-		if (operation == "ShieldUp") 
+		else if (operation == "ShieldUp") 
 		{
 			GameObject shield = (GameObject)o;
-			GameObject character = (GameObject)data[0];
+			GameObject character = (GameObject)data [0];
 			shield.GetComponent<SpeedScript> ().enabled = false;
 			shield.GetComponent<ShieldScript> ().setCharacter (character);
 		}
-		if (operation == "SlowDown") 
+		else if (operation == "SlowDown") 
 		{
 			StartCoroutine(SlowDown ());
 		}
-		if (operation == "Protected") 
+		else if (operation == "Protected") 
 		{
-			GameObject shield = (GameObject)o;
+			GameObject character = (GameObject)o;
 			GameObject danger = (GameObject)data[0];
-			shield.transform.Find ("Shield(Clone)").gameObject.SetActive (false);
+			GameObject shield = character.transform.Find ("Shield(Clone)").gameObject;
+			shield.GetComponent<ShieldScript> ().reset (GameObject.Find ("ShieldPooler"));
+			shield.SetActive (false);
 			danger.SetActive (false);
 		}
 	}
@@ -125,10 +137,14 @@ public class GameController : MonoBehaviour, Observer {
 
 	}
 
+	/// <summary>
+	/// Generates the item on tile.
+	/// </summary>
+	/// <returns><c>true</c>, if item on tile was generated, <c>false</c> otherwise.</returns>
+	/// <param name="platform">Platform.</param>
 	public bool generateItemOnTile(GameObject platform)
 	{
-
-		if(Random.Range(0,1000)<probabilityOfItems)
+		if(Random.Range(0,100) < probabilityOfItems)
 		{
 			float range = 0;
 			for (int i = 0; i < model.Collectibles.Count; i++)
@@ -150,7 +166,12 @@ public class GameController : MonoBehaviour, Observer {
 		}
 		return false;
 	}
-	
+
+	/// <summary>
+	/// Generates the item.
+	/// </summary>
+	/// <param name="pool">Pool.</param>
+	/// <param name="platform">Platform.</param>
 	public void generateItem(ObjectPooler pool, GameObject platform)
 	{
 		GameObject obj = pool.getObject();
@@ -168,11 +189,12 @@ public class GameController : MonoBehaviour, Observer {
 		{
 			model.Platform.MinWidth--;
 		}
-		for (int i = 0; i < model.Collectibles.Count; i++)
-		{
-			model.Collectibles [i].Rate += 0.5f;
-		}
-		probabilityOfItems += 5;
+		if(model.Collectibles [0].Rate > 30)model.Collectibles [0].Rate -= 0.2f;
+		if(model.Collectibles [1].Rate < 30)model.Collectibles [0].Rate += 0.5f;
+		if(model.Collectibles [2].Rate < 30)model.Collectibles [0].Rate += 0.3f;
+		if(model.Collectibles [3].Rate < 30)model.Collectibles [0].Rate += 0.3f;
+		if(model.Collectibles [4].Rate < 30)model.Collectibles [0].Rate += 0.3f;
+		probabilityOfItems += 2;
 
 	}
 
@@ -192,22 +214,36 @@ public class GameController : MonoBehaviour, Observer {
 		yield return www;
 	}
 
+	/// <summary>
+	/// Doubles up.
+	/// </summary>
+	/// <returns>The up.</returns>
 	IEnumerator DoubleUp(){
-		Debug.Log ("DoubleUp");
+
+		multiplied = true;
 		Color text = score.color;
 		score.color = Color.yellow;
+		float coinRate = model.Collectibles [0].Rate;
+		float doubleRate = model.Collectibles [3].Rate;
+		model.Collectibles [3].Rate = 0f;
+		model.Collectibles [0].Rate += 10f;
 		model.Score.scoreMultiplier = 2f; 
 		yield return new WaitForSeconds(10);
 		score.color = text;
+		model.Collectibles [0].Rate = coinRate;
+		model.Collectibles [3].Rate = doubleRate;
 		model.Score.scoreMultiplier = 1f; 
+		multiplied = false;
 	}
 
+	/// <summary>
+	/// Slows down.
+	/// </summary>
+	/// <returns>The down.</returns>
 	IEnumerator SlowDown(){
-		Debug.Log ("HSADFASFas");
-		float speed = model.GameSpeed.SpeedValue;
-		model.GameSpeed.SpeedValue = speed / 1.5f;
-		yield return new WaitForSecondsRealtime(10);
-		if(model.GameSpeed.SpeedValue!=0)model.GameSpeed.SpeedValue = speed ;
+		model.GameSpeed.slowSpeed (1.5f);
+		yield return new WaitForSeconds(10);
+		model.GameSpeed.resetSpeed() ;
 	}
 
 

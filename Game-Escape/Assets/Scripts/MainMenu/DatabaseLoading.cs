@@ -9,15 +9,21 @@ public class DatabaseLoading : MonoBehaviour {
 	public GameObject EntryPrefab;
 	private string[] items;
 	public float position;
+
+
 	IEnumerator Start(){
-		WWW itemsData = new WWW("https://zeno.computing.dundee.ac.uk/2016-ac32006/krasimirkostov/Scoreboard.php");
-		yield return itemsData;
-		string itemsDataString = itemsData.text;
-		print (itemsDataString);
-		items = itemsDataString.Split(';');
+		WWW data = new WWW("https://zeno.computing.dundee.ac.uk/2016-ac32006/krasimirkostov/Scoreboard.php");
+		yield return data;
+		string dataStrings = data.text;
+		print (dataStrings);
+		items = dataStrings.Split(';');
 		GetDataValue(items);
 	}
 
+	/// <summary>
+	/// Gets the data value.
+	/// </summary>
+	/// <param name="data">Data.</param>
 	void GetDataValue(string[] data){
 		string catergoryName = "Name:";
 		string catergoryScore = "Score:";
@@ -31,10 +37,14 @@ public class DatabaseLoading : MonoBehaviour {
 			if (name.Contains ("|"))name =  name.Remove (name.IndexOf ("|"));
 			PresentEntry (i+1, name, score);
 		}
-		//position = (EntryPrefab.GetComponent<RectTransform>().rect.height+gameObject.GetComponent<VerticalLayoutGroup>().spacing) * data.Length ;
-		//gameObject.GetComponent<RectTransform> ().sizeDelta = new Vector2 (gameObject.GetComponent<RectTransform>().sizeDelta.x,gameObject.GetComponent<RectTransform>().sizeDelta.y+position);
-	}
+}
 
+	/// <summary>
+	/// Presents the entry.
+	/// </summary>
+	/// <param name="position">Position.</param>
+	/// <param name="name">Name.</param>
+	/// <param name="score">Score.</param>
 	void PresentEntry(int position,string name, string score)
 	{
 		GameObject obj = (GameObject)Instantiate (EntryPrefab);

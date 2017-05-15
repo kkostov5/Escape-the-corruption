@@ -36,7 +36,7 @@ public class CharacterTransition : MonoBehaviour {
 		image = gameObject.GetComponent<Image> ();
 		previousButton.GetComponent<Button> ().interactable = false;
 		image.sprite = characters[characterIndex].characterSprites[versionIndex];
-		PlayerPrefs.SetFloat ("HighScore", 0f);
+		//PlayerPrefs.SetFloat ("HighScore", 0f);
 	}
 
 	/// <summary>

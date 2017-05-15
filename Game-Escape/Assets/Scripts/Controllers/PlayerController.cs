@@ -11,6 +11,12 @@ public class PlayerController : MonoBehaviour,Observer {
 		model = new PlayerModel ();
 	}
 
+	/// <summary>
+	/// Operation the specified o, operation and data.
+	/// </summary>
+	/// <param name="o">O.</param>
+	/// <param name="operation">Operation.</param>
+	/// <param name="data">Data.</param>
 	public void Operation(Object o, string operation,params object[] data)
 	{
 		if (operation == "Jump") 
