@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class CharacterView : Observable {
 
-
+	private bool shielded = false;
 	// Use this for initialization
 	void Start () {
-		//gameObject.GetComponent<SpriteRenderer>().sprite = Character.GetSprite ();
-		//gameObject.GetComponent<Animator>().runtimeAnimatorController = Character.GetAnim ();
+		gameObject.GetComponent<SpriteRenderer>().sprite = Character.GetSprite ();
+		gameObject.GetComponent<Animator>().runtimeAnimatorController = Character.GetAnim ();
 	}
 
 	// Update is called once per frame
@@ -42,7 +42,11 @@ public class CharacterView : Observable {
 		}
 		if (other.gameObject.tag == "Danger") 
 		{
-			Notify (gameObject, "Death");
+			if(!shielded)Notify (gameObject, "Death");
+			if (shielded) {
+				Notify (gameObject, "Protected", other.gameObject);
+				shielded = false;
+			}
 		}
 		if (other.gameObject.tag == "Coin") 
 		{
@@ -56,12 +60,18 @@ public class CharacterView : Observable {
 		}
 		if (other.gameObject.tag == "ShieldUp") 
 		{
+			shielded = true;
 			Notify (other.gameObject, "ShieldUp",gameObject);
 		}
 		if (other.gameObject.tag == "SlowDown") 
 		{
-			Notify (other.gameObject, "SlowDown");
+			if(!shielded)Notify (other.gameObject, "SlowDown");
+			if (shielded) {
+				Notify (gameObject, "Protected", other.gameObject);
+				shielded = false;
+			}
 			other.gameObject.SetActive (false);
+
 		}
 
 	}

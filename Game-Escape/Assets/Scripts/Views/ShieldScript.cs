@@ -22,15 +22,7 @@ public class ShieldScript : Observable {
 		character = obj;
 		transform.parent = character.transform;
 		dirtyFlag = true;
-		GetComponent<CircleCollider2D> ().isTrigger = false;
+		GetComponent<CircleCollider2D> ().enabled = false;
 	}
-
-	void OnTriggerEnter2D(Collider2D other) 
-	{
-		if (other.gameObject.tag == "Danger" || other.gameObject.tag == "SlowDown") 
-		{
-			Notify (gameObject, "Protected", other.gameObject);
-		}
-
-	}
+		
 }

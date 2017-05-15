@@ -19,13 +19,15 @@ public class GameModel {
 		score = new Score ();
 		collectibles = new List<Item> ();
 		Item coin = new Item (20);
-		Item warning = new Item (5);
-		Item slowDown = new Item (10);
-		Item doubleUp = new Item (10);
+		Item warning = new Item (15);
+		Item slowDown = new Item (5);
+		Item doubleUp = new Item (5);
+		Item shield = new Item (5);
 		collectibles.Add (coin);
 		collectibles.Add (warning);
 		collectibles.Add (slowDown);
 		collectibles.Add (doubleUp);
+		collectibles.Add (shield);
 		platform = new Platform (6,3,2,3,-9,9,7);
 		gameSpeed = new Speed (0.13f,1.02f,1,0.23f);
 

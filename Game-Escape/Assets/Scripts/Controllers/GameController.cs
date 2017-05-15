@@ -24,7 +24,7 @@ public class GameController : MonoBehaviour, Observer {
 	{
 		model = new GameModel ();
 
-		probabilityOfItems = 100;
+		probabilityOfItems = 90;
 		score = GameObject.Find ("ScoreText").GetComponent<Text>();
 		highscore = GameObject.Find ("HighScoreText").GetComponent<Text>();
 
@@ -87,7 +87,7 @@ public class GameController : MonoBehaviour, Observer {
 		{
 			GameObject shield = (GameObject)o;
 			GameObject danger = (GameObject)data[0];
-			shield.SetActive (false);
+			shield.transform.Find ("Shield(Clone)").gameObject.SetActive (false);
 			danger.SetActive (false);
 		}
 	}
@@ -104,8 +104,6 @@ public class GameController : MonoBehaviour, Observer {
 		float height= model.Platform.getPlatformHeight (last.transform.position.y);
 
 		GameObject tile;
-//		bool coinCheck = false;
-//		bool virusCheck = false;
 		int numberColl = 2;
 
 		for (int i = 1; i <= model.Platform.getPlatformWidth(); i++) 
@@ -123,15 +121,6 @@ public class GameController : MonoBehaviour, Observer {
 				if (generateItemOnTile (tile))
 				numberColl--;
 			}
-//			if (!coinCheck) 
-//			{
-//				coinCheck = generateItem(model.Coin,coinPooler,tile);
-//
-//			}
-//			if (!virusCheck) 
-//			{
-//				virusCheck = generateItem(model.Warning,virusPooler,tile);
-//			}
 		}
 
 	}
@@ -181,9 +170,9 @@ public class GameController : MonoBehaviour, Observer {
 		}
 		for (int i = 0; i < model.Collectibles.Count; i++)
 		{
-
 			model.Collectibles [i].Rate += 0.5f;
 		}
+		probabilityOfItems += 5;
 
 	}
 

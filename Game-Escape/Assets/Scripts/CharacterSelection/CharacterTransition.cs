@@ -36,7 +36,7 @@ public class CharacterTransition : MonoBehaviour {
 		image = gameObject.GetComponent<Image> ();
 		previousButton.GetComponent<Button> ().interactable = false;
 		image.sprite = characters[characterIndex].characterSprites[versionIndex];
-		//PlayerPrefs.SetFloat ("HighScore", 0f);
+		PlayerPrefs.SetFloat ("HighScore", 0f);
 	}
 
 	/// <summary>
@@ -79,7 +79,7 @@ public class CharacterTransition : MonoBehaviour {
 	{
 		versionIndex = 0;
 		if (characters [characterIndex].scoreRequired > PlayerPrefs.GetFloat ("HighScore")) {
-			NotAccessible.text = "You need " + characters [characterIndex].scoreRequired + " to unlock the character.";
+			NotAccessible.text = "You need highscore of " + characters [characterIndex].scoreRequired + " to unlock the character.";
 			NotAccessible.gameObject.SetActive (true);
 			startButton.SetActive (false);
 		} else {
