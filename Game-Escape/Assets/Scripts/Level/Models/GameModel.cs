@@ -21,11 +21,13 @@ public class GameModel {
 		Item slowDown = new Item (5);
 		Item doubleUp = new Item (5);
 		Item shield = new Item (5);
+		Item virus = new Item (5);
 		collectibles.Add (goodPickUp);
 		collectibles.Add (badPickUp);
 		collectibles.Add (slowDown);
 		collectibles.Add (doubleUp);
 		collectibles.Add (shield);
+		collectibles.Add (virus);
 		platform = new Platform (6,3,1,3,-8.5f,9,7);
 		gameSpeed = new Speed (0.13f,1.03f,1f,0.23f);
 

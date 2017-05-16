@@ -37,6 +37,15 @@ public class CharacterView : Observable {
 		{
 			Notify (gameObject, "Death");
 		}
+
+		else if (other.gameObject.tag == "Danger") 
+		{
+			if(!shielded)Notify (other.gameObject, "Death");
+			if (shielded) {
+				Notify (gameObject, "Protected", other.gameObject);
+				shielded = false;
+			}
+		}
 		else if (other.gameObject.tag == "DecreasePickUp") 
 		{
 			if(!shielded)Notify (other.gameObject, "DecreasePickUp");

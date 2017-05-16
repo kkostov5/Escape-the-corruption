@@ -178,6 +178,7 @@ public class GameController : MonoBehaviour, Observer {
 		if(model.Collectibles [2].Rate < 30)model.Collectibles [0].Rate += 0.3f;
 		if(model.Collectibles [3].Rate < 30)model.Collectibles [0].Rate += 0.3f;
 		if(model.Collectibles [4].Rate < 30)model.Collectibles [0].Rate += 0.3f;
+		if(model.Collectibles [5].Rate < 30)model.Collectibles [0].Rate += 0.3f;
 		probabilityOfItems += 2;
 
 
