@@ -37,7 +37,6 @@ public  class Speed  {
 	public bool updateSpeed(float timeUpdate)
 	{
 		time += timeUpdate;
-		Debug.Log (speedTarget);
 		if (maxSpeed < speed)
 			return false;
 		if (speed*time > speedTarget) {

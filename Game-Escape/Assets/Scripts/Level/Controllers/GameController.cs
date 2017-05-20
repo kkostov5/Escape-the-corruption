@@ -81,8 +81,8 @@ public class GameController : MonoBehaviour, Observer {
 		{
 			GameObject character = (GameObject)o;
 			GameObject danger = (GameObject)data[0];
-			GameObject shield = character.transform.Find ("Shield(Clone)").gameObject;
-			shield.GetComponent<ShieldScript> ().reset (GameObject.Find ("ShieldPooler"));
+			GameObject shield = GameObject.Find ("Shield");
+			shield.GetComponent<ShieldScript> ().reset ();
 			shield.SetActive (false);
 			danger.SetActive (false);
 		}

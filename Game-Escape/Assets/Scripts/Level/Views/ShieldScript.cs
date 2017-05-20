@@ -20,19 +20,27 @@ public class ShieldScript : Observable {
 	public void setCharacter(GameObject obj)
 	{
 		character = obj;
-		gameObject.transform.parent = character.transform;
+		gameObject.name = "Shield";
 		dirtyFlag = true;
 		GetComponent<CircleCollider2D> ().enabled = false;
 		originaScale = transform.localScale;
-		transform.localScale += new Vector3 (0.4f, 0.4f, 0);
+		transform.localScale += new Vector3 (0.2f, 0.2f, 0);
 	}
-	public void reset(GameObject obj)
+	public void reset()
 	{
 		character = null;
-		transform.parent = obj.transform;
 		dirtyFlag = false;
 		GetComponent<CircleCollider2D> ().enabled = true;
+		gameObject.name = "Shield(Clone)";
 		transform.localScale = originaScale;
 	}
-		
+	void OnTriggerEnter2D(Collider2D other) 
+	{
+
+		if (other.gameObject.tag == "Danger" || other.gameObject.tag == "DecreasePickUp" || other.gameObject.tag == "SlowDown") 
+		{
+			Notify (gameObject, "Protected", other.gameObject);
+		}
+
+	}	
 }
